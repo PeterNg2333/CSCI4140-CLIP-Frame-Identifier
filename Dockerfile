@@ -8,6 +8,7 @@ WORKDIR /my-app
 COPY requirements.txt .
 
 # Install the required Python packages
+RUN pip freeze > requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy the rest of the application code into the container
