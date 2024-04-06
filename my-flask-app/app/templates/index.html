@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        {% include './components/Head.html' %}
+    </head>
+    <body>
 
-  {% include './components/Head.html' %}
-  <body>
-    {% include './components/Nav.html' %}
-    <h1>Hello, World!</h1>
-    {% include './components/Footer.html' %}
-  </body>
+        <!-- Navigation -->
+        {% include './components/Nav.html' %}
+
+        <!-- Page Content -->
+        <h1>Hello, World!</h1>
+        <p>Welcome to my Flask app.</p>
+
+        <!-- Footer -->
+        {% include './components/Footer.html' %}
+    
+        <!-- Scripts -->
+        {% include './components/Scripts.html' %}
+    </body>
 </html>
