@@ -1,1 +1,18 @@
-<div> This is a Header </div>
+<nav class="container-fluid bg-color-purpleMix py-2 m-0 ">
+    <div class="navbar py-0 row">
+        <a class="navbar-brand Header me-0 col-md-3 col-sm-6" href="./index">
+            <img src="{{ url_for('static', filename='imgs/logo.png') }}" alt="logo" width="48" height="36" class="d-inline-block align-text-top">
+            <span class="text-white"> FrameFinder-AI </span>
+        </a>
+        
+        <form class="form-inline col-md-6 col-sm-6 px-md-3">
+            <div class="input-group px-md-3 px-md-6 input-group-rounded">
+                <input class="form-control mr-sm-2 input-group-field" type="search" placeholder="Find video(s) and frame(s) by description..." aria-label="Search">
+                <button class="btn btn-outline-light text-white my-2 my-sm-0 input-group-button" type="submit">Search</button>
+            </div>
+        </form>
+        <div class="col-md-3 col-sm-0"> </div>
+        
+    </div>
+
+</nav>
