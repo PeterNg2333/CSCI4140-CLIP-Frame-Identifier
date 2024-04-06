@@ -20,6 +20,10 @@ def index_html():
     except Exception as e:
         return str(e)
 
+@app.route('/root')
+def root():
+    return os.path.dirname(os.path.realpath(__file__))
+
 @app.route('/time')
 def get_time():
     return {"time": time.time()}
