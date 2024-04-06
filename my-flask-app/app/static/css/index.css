@@ -1,0 +1,35 @@
+/* This css file is used to style the index.html file and other common styles */
+
+.bg-color-purpleMix {
+    color: #fff;
+    background: -webkit-linear-gradient(110deg, #000000 40%, rgba(0, 0, 0, 0) 30%), -webkit-radial-gradient(farthest-corner at 0% 0%, #000000 70%, #323233 70%);
+    background: -o-linear-gradient(110deg, #000000 40%, rgba(0, 0, 0, 0) 30%), -o-radial-gradient(farthest-corner at 0% 0%, #000000 70%, #323233 70%);
+    background: -moz-linear-gradient(110deg, #000000 40%, rgba(0, 0, 0, 0) 30%), -moz-radial-gradient(farthest-corner at 0% 0%, #000000 70%, #323233 70%);
+    background: linear-gradient(110deg, #000000 40%, rgba(0, 0, 0, 0) 30%), radial-gradient(farthest-corner at 0% 0%, #000000 70%, #323233 70%);
+}
+
+
+
+.Header {
+    font-size: 160%;
+    font-weight: bold;
+    display: inline;
+}
+
+.px-md-6 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+}
+
+/* For the search bar */
+.input-group-rounded {
+    .input-group-field {
+      border-radius: 5000px 0 0 5000px;
+      padding-left: 1rem;
+    }
+  
+    .input-group-button{
+      border-radius:  0 5000px 5000px 0 !important;
+      font-size: 1rem;
+    }
+  }

@@ -14,11 +14,11 @@ def index():
 
 @app.route('/index.html')
 def index_html():
-    list_files = os.listdir(os.path.dirname(os.path.realpath(__file__)) + '/templates')
-    try:
-        return  render_template('index.html', title='Home', list_files=list_files)
-    except Exception as e:
-        return str(e)
+    return  render_template('index.html', title='Home', list_files=app.config['templates_list_files'])
+
+@app.route('/root')
+def root():
+    return os.path.dirname(os.path.realpath(__file__))
 
 @app.route('/time')
 def get_time():
