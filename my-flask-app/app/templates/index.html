@@ -9,8 +9,13 @@
         {% include './components/Nav.html' %}
 
         <!-- Page Content -->
-        <h1>Hello, World!</h1>
-        <p>Welcome to my Flask app.</p>
+        
+        {% if title == APP_CONFIG["title_choices"]["Home"] %}
+            {% include './home.html' %}
+        {% elif title == APP_CONFIG["title_choices"]["Player"] %}
+            {% include './videoPlayer.html' %}
+        {% endif %}
+
 
         <!-- Footer -->
         {% include './components/Footer.html' %}

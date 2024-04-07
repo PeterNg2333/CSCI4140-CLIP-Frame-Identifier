@@ -1,0 +1,16 @@
+<main class="container-fluid bg-dark text-white full-height pt-3">
+    <h5 class="p-3 pb-1 fst-italic" style="font-size: 1.4rem;"> 
+        <span class="text-lightgray">~ Transform Words into Precise Video Moments Using VLM Model - </span><strong class="blue-purple-mix">Type It, Find It</strong> 
+    </h5>
+    <h5 class="ps-3 pt-3"> 
+        <i class="fa-solid fa-table-cells-large" style="color: #ffffff;"><span class="ps-2 text-capitalize text-white"> Recommonded </span></i>
+        
+    </h5>
+    <section class="bg-dark pt-1">
+        <div class="row px-3 bg-dark">
+        {%for i in range(0, 9)%}
+            {% include 'components/videoItem.html' %}
+        {%endfor%}
+        </div>
+    </section>
+</main>
