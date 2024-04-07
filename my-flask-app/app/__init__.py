@@ -8,10 +8,14 @@ app = Flask(__name__)
 
 # Configure the Flask app (configuration settings will go here)
 # Example: app.config['DEBUG'] = True
-# 1. Add a configuration setting to the Flask app that contains a list of files in the templates directory.
 current_dir = os.path.dirname(os.path.realpath(__file__))
-app.config['templates_list_files'] = os.listdir(current_dir + '/templates')
-app.config['static_list_files'] = os.listdir(current_dir + '/static')
+app.config['templates_list_files'] = os.listdir(current_dir + '/templates') ## this is the list of files in the templates directory
+app.config['static_list_files'] = os.listdir(current_dir + '/static') ## this is the list of files in the static directory
+app.config["title_choices"] = {"Home": "Home",
+                               "Player": "Player",
+                               "Editor": "Editor",
+                               "Search": "Search",
+                               } ## this is the list of titles that can be used in the templates
 
     
 
