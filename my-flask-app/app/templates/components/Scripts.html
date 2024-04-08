@@ -1,2 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+{% if title == APP_CONFIG["title_choices"]["Player"] %}
+    <script src="{{ url_for('static', filename='js/videoPlayer.js') }}"></script>
+{% endif %}

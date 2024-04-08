@@ -79,6 +79,18 @@ main {
   margin-top: 52px;
 }
 
+/* For the Video Card */
+.videoItem:hover img {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.videoItem:hover .card-body .card-title {
+  opacity: 0.8;
+}
+
+
+
 /* For the search bar */
 
 .input-group-rounded {
