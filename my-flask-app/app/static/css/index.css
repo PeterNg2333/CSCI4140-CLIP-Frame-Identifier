@@ -134,3 +134,104 @@ main {
     -webkit-text-fill-color: rgb(255, 255, 255) !important;
   }
 }
+
+/* For the Video Player */
+.video-container {
+  padding: 0;
+  position: relative;
+  display: inline-block; /* or block depending on your layout */
+}
+
+.inVideoControl-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inVideoControl-bottom {
+  position: absolute;
+  bottom: 0%;
+  left: 0px;
+  right: 0px;
+  padding-bottom: 2%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.inVideoControl-side {
+  position: absolute;
+  top: 5%;
+  right: 0px;
+  background-color: #0f0f0fb4;
+  opacity: 0.7 !important;
+}
+
+#openinVideoSearcher{
+  font-size: 1.4em;
+}
+
+.inVideoControl-bottom .bar {
+  width: 100%;
+  display: flex;
+}
+
+.inVideoControl-bottom div .progress {
+  width: 100%;
+  height: 4px;
+  border-radius: 5px;
+}
+
+.inVideoControl-bottom div .progress:hover{
+  cursor: pointer;
+  height: 8px;
+}
+
+.inVideoControl-center button {
+  background-color: rgba(134, 128, 128, 0.5);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: auto
+}
+
+.progress {
+  background-color: rgba(211, 211, 211, 0.616);
+}
+
+.progress-bar {
+  background-color: #ffffff;
+
+}
+
+#fullScreenBtn{
+  margin: auto;
+
+}
+
+#playPauseBtn:hover{
+  width: 1.2em;
+  height: 1.2em;
+}
+
+
+.controls {
+  visibility: visible;
+}
+
+/* // Show the controls on hover and persist for a short duration */
+.controls-disabled .controls {
+  visibility: hidden;
+  transition: visibility 1s ease;
+
+}
+
+.video-container:hover .controls {
+  visibility: visible !important;
+}
+
+
+.video-controls .play-button {
+  display: none;
+}
+
