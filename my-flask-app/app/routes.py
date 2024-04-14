@@ -21,6 +21,11 @@ def player_html():
     player = app.config["title_choices"]["Player"]
     return  render_template('index.html', title=player, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
 
+@app.route('/videoSearch')
+def search_html():
+    search = app.config["title_choices"]["Search"]
+    return  render_template('index.html', title=search, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
+
 @app.route('/root')
 def root():
     return os.path.dirname(os.path.realpath(__file__))
