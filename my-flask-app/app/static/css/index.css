@@ -79,6 +79,18 @@ main {
   margin-top: 52px;
 }
 
+/* For the Video Card */
+.videoItem:hover img {
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.videoItem:hover .card-body .card-title {
+  opacity: 0.8;
+}
+
+
+
 /* For the search bar */
 
 .input-group-rounded {
@@ -122,3 +134,160 @@ main {
     -webkit-text-fill-color: rgb(255, 255, 255) !important;
   }
 }
+
+/* For the Video Player */
+.video-container {
+  padding: 0;
+  position: relative;
+  display: inline-block; /* or block depending on your layout */
+}
+
+.inVideoControl-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inVideoControl-bottom {
+  position: absolute;
+  bottom: 0%;
+  left: 0px;
+  right: 0px;
+  padding-bottom: 2%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+
+.inVideoControl-side {
+  position: absolute;
+  top: 5%;
+  right: 0px;
+}
+
+.bg-halfdark{
+  background-color: #0f0f0fe0 !important;
+  opacity: 0.75 !important;
+}
+
+
+
+#openinVideoSearcher{
+  font-size: 1.4em;
+}
+
+.inVideoControl-bottom .bar {
+  width: 100%;
+  display: flex;
+}
+
+.inVideoControl-bottom div .progress {
+  width: 100%;
+  height: 4px;
+  border-radius: 5px;
+}
+
+.inVideoControl-bottom div .progress:hover{
+  cursor: pointer;
+  height: 8px;
+}
+
+.inVideoControl-center button {
+  background-color: rgba(134, 128, 128, 0.5);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  margin: auto
+}
+
+.inVideoSearcherInput{
+  margin-top: auto;
+  margin-bottom: auto;
+  color: white;
+}
+
+.progress {
+  background-color: rgba(211, 211, 211, 0.616);
+}
+
+.progress-bar {
+  background-color: #ffffff;
+
+}
+
+#fullScreenBtn{
+  margin: auto;
+
+}
+
+#playPauseBtn:hover{
+  width: 1.2em;
+  height: 1.2em;
+}
+
+
+.controls {
+  visibility: visible;
+}
+
+/* // Show the controls on hover and persist for a short duration */
+.controls-disabled .controls {
+  visibility: hidden;
+  transition: visibility 1s ease;
+
+}
+
+.video-container:hover .controls {
+  visibility: visible !important;
+}
+
+
+.video-controls .play-button {
+  display: none;
+}
+
+.inVideoSearchResult::-webkit-scrollbar { 
+  width: 5px; 
+} 
+
+/* Responsive Design */
+/* For the .inVideoSearchResult */
+/* In smaller screens */
+@media (max-width: 768px) {
+  .inVideoSearchResult {
+    max-height: 280px;
+  }
+}
+
+/* In middle screens */
+@media (min-width: 768px) and (max-width: 992px) {
+  .inVideoSearchResult {
+    max-height: 300px;
+  }
+}
+
+/* In larger screens */
+@media (min-width: 1000px)  and (max-width: 1500px){
+  .inVideoSearchResult {
+    max-height: 330px;
+  }
+}
+
+/* In extra large screens */
+@media (min-width: 1600px) and (max-width: 1900px) {
+  .inVideoSearchResult {
+    max-height: 420px;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1900px) {
+  .inVideoSearchResult {
+    max-height: 500px;
+  }
+}
+
+
+
+
+
