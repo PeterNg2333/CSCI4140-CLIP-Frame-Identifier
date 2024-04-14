@@ -55,16 +55,25 @@
 
 
 
-            <section id="inVideoSearcher" class="inVideoControl-side controls px-3 py-1">
-                <span id="openinVideoSearcher" class="blue-purple-mix" style="display: none;"><i  class="fa-solid fa-angles-left "  onclick="openVideoSearcher()"></i> </span>
-                <div id="inVideoSearcherContent" class="row" >
+            <section id="inVideoSearcher" class="inVideoControl-side controls py-1 bg-halfdark">
+                <span id="openinVideoSearcher" class="blue-purple-mix px-3" ><i  class="fa-solid fa-angles-left "  onclick="openVideoSearcher()"></i> </span>
+                <div id="inVideoSearcherContent" class="py-2 ps-2 pe-2 " style="display: none;">
                     <div class="inVideoSearcherContent-header row">
-                        <div id="openinVideoSearcher" class="blue-purple-mix"><i  class="fa-solid fa-angles-right "  onclick="closeVideoSearcher()"></i> </div>
-                        <div class="">
-                            <input class="text-white" placeholder="Search for specific frames"></input>
-                            <span><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <div id="openinVideoSearcher" class="blue-purple-mix d-inline col-2"><i  class="fa-solid fa-angles-right "  onclick="closeVideoSearcher()"></i> </div>
+                        <div class="col-10 py-1 ps-1">
+                            <div class="inVideoSearcherInput">
+                                <input class="text-white bg-dark rounded border border-white" placeholder="Find frames"></input>
+                                <span class="ps-1"><i class="fa-solid fa-magnifying-glass" onclick="getInVideoFrames()"></i></span>
+                            </div>
+                            <div class="pt-3 inVideoSearchResult" style="overflow-y: scroll; min-height: 200px; overflow-x: hidden;">
+                                <ul class="ps-1 ">
+                                    {%for i in range(0, 8)%}
+                                        {%  include './components/inVideoItem.html' %}
+                                    {%endfor%}
+                                    
+                                </ul>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
             </section>
