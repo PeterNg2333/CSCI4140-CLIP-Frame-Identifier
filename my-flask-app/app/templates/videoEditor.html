@@ -1,16 +1,99 @@
 <main class="container-fluid bg-dark text-white full-height pt-2">
-    <div class="row pt-3">
-        <section class="col-4" id="sideFunction">
-            sideFunction
-        </section>
-        <div class="col-8" id="videoEditor">
-            <section class="row" id="videoDisplay">
-                Video Display
+    <div class="row pt-2 px-1">
+        <aside class="col-4 rounded bg-dark border border-dark pe-2" id="sideFunction">
+            <div id="mini-navbar" class="bg-color-darkgray p-2 pb-0 ">
+                <span class="p-1 px-2 mb-0 align-middle bg-dark fs-5 "> Video Clips <i class="fa-solid fa-photo-film blue-purple-mix"></i> </span>
+                <span class="p-1 ps-3 align-middle fs-6 text-light">Audio Files <i class="fa-regular fa-file-audio pe-0"></i></span>
+                <span class="p-1 ps-3 align-middle fs-6 text-light">Text <i class="fa-solid fa-text-width pe-0"></i></span>
+            </div>
+            <section class="bg-color-darkgray p-2 pt-0 " id="videoDisplay">
+                <div class="p-0 px-2 pe-2 pt-1 bg-dark ">
+                    <!-- <div class="p-1 px-2 mb-0 bg-dark fs-5 col-6">
+                        <u class="fs-6 "> Uploaded Clips </u>
+                    </div> -->
+                    <div class="p-2 px-2 mb-0 bg-dark fs-6 text-end col-12" >
+                        <button class="btn border border-white rounded my-0 btn-dark text-white " type="submit"> Add New </button>
+                    </div>
+                </div>
+                <div class="p-1 pt-0 px-2 mb-0 bg-dark videoClip" style="height: 35vh; overflow-y: scroll; overflow-x: hidden;">
+
+                    <ul class="px-2 pb-2 row clickable-videoClip">
+                        {% for i in range (1, 5) %}
+                            <il class="col-4 py-2 videoHover">
+                                <div class="" >
+                                    <img class="" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
+                                                class="" 
+                                                width="100%"
+                                                height="100%"
+                                                style="margin-left: auto; margin-right: auto;"
+                                                alt="...">
+                                </div>
+                                <div class="card-body p-0" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap" style="height: 25px; overflow: hidden;">Card Tisdasasdasdfsdftle- {{i}}</p>
+                                    <p class="text-end align-end mb-0"> <i class="fa-regular fa-clock"></i> 00:00 </p>
+                                </div>
+                            </il>
+                        {% endfor %}
+                    </ul>
+                </div>
             </section>
-            <section class="row" id="videoControls">
-                Video Controls
-            </section>
-        </div>
+            <section class="bg-color-darkgray p-2 pt-0" id="videoDisplay">
+                    <div id="mini-navbar" class="bg-color-darkgray px-0 pb-0 pt-0">
+                        <span class="p-1 px-2 mb-0 align-middle bg-dark fs-6 "> <strong class=""> <i class="fa-solid fa-clipboard-question"></i> Find Frame </strong> - Card Title </i> </span>
                         
+                    </div>
+                <div class="p-1 mb-0 bg-dark ">
+                    <form class="form-inline mt-3 px-3" id="searchBar" method="get" action=""  >
+                        <div class="input-group" style="font-size: 0.6rem !important;">
+                            <input class="form-control mixplaceholder bg-dark text-white" type="search" placeholder="Query specific moments for the selected clips..." aria-label="Search">
+                            <button class="btn btn-outline-light text-white bg-blue-purple-mix" type="submit"><i class="fa-solid fa-magnifying-glass text-dark"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="p-1 mb-0 bg-dark pt-3 videoClip" style="height: 29vh; overflow-y: scroll; min-height: 200px; overflow-x: hidden;">
+                        <ul class="px-2  row " >
+                            <div class="px-3">
+                            {%for i in range(0, 8)%}
+                            <il class="ps-0 inVideoItem pb-2 mb-1 col-6 "  >
+                                <div class="col-6" style="padding-left: 0px; padding-right: 0px;">
+                                <img src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
+                                        class=""
+                                        width="100%"
+                                        height="100%"
+                                        alt="...">
+                                </div>
+                                <div class="col-6 px-0 pb-2 pt-1 text-center ">
+                                    <p class="card-text" ><small class="text-muted fs-6"> 0.01 to 0.01</small></p>
+                                </div>
+                            </il>
+                            {%endfor%}
+                        </div>
+                        </ul>
+                </div>
+                
+            </section>
+        </aside>
+        <div class="col-8 rounded bg-dark border border-dark ps-2" id="videoEditor">
+            <section class="bg-color-darkgray p-2 pb-0 " id="videoDisplay">
+                <div class="p-1 px-2 mb-0 align-middle bg-dark fs-4 ">Preview <i class="fa-solid fa-film"></i> </div>
+                <div class="p-1 px-2 mb-0 bg-dark fs-4 pt-3" style="min-height: 200px;">
+                    <video 
+                        id="videoPlayer" 
+                        class="" 
+                        preload="metadata" 
+                        width="100%" 
+                        style="height: 60vh;"
+                        
+                        poster="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA">
+                        <source src="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/v-de3f6ca7-2db3-4689-8160-0f574a5996ad.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </section>
+            <section class="bg-color-darkgray p-2 mt-2 pt-0 " id="videoDisplay">
+                <div class="p-1 px-2 mb-0 bg-dark" style="min-height: 15vh;">
+
+                </div>
+            </section>
+        </div>             
     </div>
 </main>
