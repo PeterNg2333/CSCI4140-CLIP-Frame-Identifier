@@ -38,10 +38,9 @@
                 </div>
             </section>
             <section class="bg-color-darkgray p-2 pt-0" id="videoDisplay">
-                    <div id="mini-navbar" class="bg-color-darkgray px-0 pb-0 pt-0">
-                        <span class="p-1 px-2 mb-0 align-middle bg-dark fs-6 "> <strong class=""> <i class="fa-solid fa-clipboard-question"></i> Find Frame </strong> - Card Title </i> </span>
-                        
-                    </div>
+                <div id="mini-navbar" class="bg-color-darkgray px-0 pb-0 pt-0">
+                    <span class="p-1 px-2 mb-0 align-middle bg-dark fs-6 "> <strong class=""> <i class="fa-solid fa-clipboard-question"></i> Find Frame </strong> - Card Title </i> </span>
+                </div>
                 <div class="p-1 mb-0 bg-dark ">
                     <form class="form-inline mt-3 px-3" id="searchBar" method="get" action=""  >
                         <div class="input-group" style="font-size: 0.6rem !important;">
@@ -50,25 +49,25 @@
                         </div>
                     </form>
                 </div>
-                <div class="p-1 mb-0 bg-dark pt-3 videoClip" style="height: 29vh; overflow-y: scroll; min-height: 200px; overflow-x: hidden;">
-                        <ul class="px-2  row " >
-                            <div class="px-3">
-                            {%for i in range(0, 8)%}
-                            <il class="ps-0 inVideoItem pb-2 mb-1 col-6 "  >
-                                <div class="col-6" style="padding-left: 0px; padding-right: 0px;">
-                                <img src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
-                                        class=""
-                                        width="100%"
-                                        height="100%"
-                                        alt="...">
+                <div class="p-1 mb-0 bg-dark pt-1 videoClip" style="height: 29vh; overflow-y: scroll; overflow-x: hidden;">
+                    <ul class="px-3 pb-2 row clickable-videoClip">
+                        {% for i in range (1, 5) %}
+                            <il class="col-6 py-2 videoHover">
+                                <div class="" >
+                                    <img class="" src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
+                                                class="" 
+                                                width="100%"
+                                                height="100%"
+                                                style="margin-left: auto; margin-right: auto;"
+                                                alt="...">
                                 </div>
-                                <div class="col-6 px-0 pb-2 pt-1 text-center ">
-                                    <p class="card-text" ><small class="text-muted fs-6"> 0.01 to 0.01</small></p>
+                                <div class="card-body p-0" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap" style="height: 25px; overflow: hidden;">Card Tisdasasdasdfsdftle- {{i}}</p>
+                                    <p class="text-end align-end mb-0"> <i class="fa-regular fa-clock"></i> 00:00 </p>
                                 </div>
                             </il>
-                            {%endfor%}
-                        </div>
-                        </ul>
+                        {% endfor %}
+                    </ul>
                 </div>
                 
             </section>
