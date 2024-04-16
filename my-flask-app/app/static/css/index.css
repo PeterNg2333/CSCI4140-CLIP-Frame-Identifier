@@ -71,6 +71,11 @@
     color: transparent;
 }
 
+.bg-blue-purple-mix{
+  background: linear-gradient(to right, #2ABDFE 0%, #9865FE 100%);
+  color: white !important;
+}
+
 .text-lightgray {
     color: #79797e;
 }
@@ -250,6 +255,8 @@ main {
   width: 5px; 
 } 
 
+
+
 /* Responsive Design */
 /* For the .inVideoSearchResult */
 /* In smaller screens */
@@ -289,5 +296,28 @@ main {
 
 
 
+/* for Search Results */
 
+/* .VideoSearchResult-frame{
+    flex-wrap: wrap;
+
+} */
+
+.SearchResult-frame::-webkit-scrollbar {
+  height: 5px !important;
+}
+
+.SearchResult-frame::-webkit-scrollbar-track {
+  background: #2125298f; 
+}
+ 
+
+.SearchResult-frame::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+
+.SearchResult-frame::-webkit-scrollbar-thumb:hover {
+  background: #fffdfd; 
+}
 

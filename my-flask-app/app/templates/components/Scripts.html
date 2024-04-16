@@ -3,3 +3,19 @@
 {% if title == APP_CONFIG["title_choices"]["Player"] %}
     <script src="{{ url_for('static', filename='js/videoPlayer.js') }}"></script>
 {% endif %}
+{% if title == APP_CONFIG["title_choices"]["Editor"] %}
+    <script src="{{ url_for('static', filename='js/videoEditor.js') }}"></script>
+    <script> 
+        document.querySelector('#searchBar').innerHTML = ""
+        document.querySelector('#jumpToVideoEditor').innerHTML = ""
+        document.querySelector('#App-Name').innerHTML = `FrameFinder.AI - 
+                                                            <a 
+                                                                href="./videoEditor" 
+                                                                class="btn text-white rounded bg-blue-purple-mix blue-purple-mix p-1" 
+                                                                style="font-size: 1.05rem margin-top: auto; margin-bottom: auto; margin-top: -6px; ;"
+                                                            > 
+                                                                Smart Editor 
+                                                                <i class="fa-solid fa-video ps-1"></i>
+                                                            </a>`
+    </script>
+{% endif %}

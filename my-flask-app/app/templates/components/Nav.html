@@ -2,16 +2,21 @@
     <div class="navbar py-0 row">
         <a class="navbar-brand Header me-0 col-md-3 col-sm-6" href="./Home">
             <img src="{{ url_for('static', filename='imgs/logo.png') }}" alt="logo" width="38" height="38" class="d-inline-block align-text-top">
-            <span class="text-white"> FrameFinder-AI </span>
+            <span class="text-white" id="App-Name"> FrameFinder.AI </span>
         </a>
         
-        <form class="form-inline col-md-6 col-sm-6 px-md-3">
+        <form class="form-inline col-md-6 col-sm-6 px-md-3" id="searchBar" method="get" action="./videoSearch"  >
             <div class="input-group px-md-3 px-md-6 input-group-rounded">
                 <input class="form-control mr-sm-2 input-group-field" type="search" placeholder="Find video(s) and frame(s) by description..." aria-label="Search">
                 <button class="btn btn-outline-light text-white my-2 my-sm-0 input-group-button" type="submit">Search</button>
             </div>
         </form>
-        <div class="col-md-3 col-sm-0"> </div>
+        <div class="col-md-3 col-sm-0" id="jumpToVideoEditor"> 
+            <div class="text-end pe-3">
+                <a href="./videoEditor" class="btn text-white my-2 my-sm-0 rounded bg-blue-purple-mix blue-purple-mix px-3" > Smart Editor <i class="fa-solid fa-video ps-1"></i></a>
+            </div>
+
+        </div>
         
     </div>
 
