@@ -3,6 +3,9 @@
 {% if title == APP_CONFIG["title_choices"]["Player"] %}
     <script src="{{ url_for('static', filename='js/videoPlayer.js') }}"></script>
 {% endif %}
+{% if title == APP_CONFIG["title_choices"]["Search"] %}
+    <script src="{{ url_for('static', filename='js/videoSearch.js') }}"></script>
+{% endif %}
 {% if title == APP_CONFIG["title_choices"]["Editor"] %}
     <script src="{{ url_for('static', filename='js/videoEditor.js') }}"></script>
     <script> 

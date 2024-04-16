@@ -285,12 +285,26 @@ main {
   .inVideoSearchResult {
     max-height: 420px;
   }
+
+  .searchItem-frame{
+    height: 80px !important;
+    width: 100px !important;
+  }
 }
 
 /* Extra large screens */
 @media (min-width: 1900px) {
   .inVideoSearchResult {
     max-height: 500px;
+  }
+
+  .searchItem-frame{
+    height: 105px !important;
+    width: 130px !important;
+  }
+
+  .searchItemCard{
+    font-size: 1.2rem;
   }
 }
 
@@ -319,5 +333,14 @@ main {
 
 .SearchResult-frame::-webkit-scrollbar-thumb:hover {
   background: #fffdfd; 
+}
+
+.searchItem:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.searchItem:hover .card-body .card-title {
+opacity: 0.8;
 }
 
