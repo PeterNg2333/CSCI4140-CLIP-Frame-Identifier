@@ -15,7 +15,7 @@
                         <button class="btn border border-white rounded my-0 btn-dark text-white " type="submit"> Add New </button>
                     </div>
                 </div>
-                <div class="p-1 pt-0 px-2 mb-0 bg-dark videoClip" style="height: 35vh; overflow-y: scroll; overflow-x: hidden;">
+                <div class="p-1 pt-0 px-2 mb-0 bg-dark videoClip" style="height: 25vh; overflow-y: scroll; overflow-x: hidden;">
 
                     <ul class="px-2 pb-2 row clickable-videoClip">
                         {% for i in range (1, 5) %}
@@ -49,21 +49,22 @@
                         </div>
                     </form>
                 </div>
-                <div class="p-1 mb-0 bg-dark pt-1 videoClip" style="height: 29vh; overflow-y: scroll; overflow-x: hidden;">
-                    <ul class="px-3 pb-2 row clickable-videoClip">
+                <div class="p-1 mb-0 bg-dark pt-1 videoClip w-100" style="height: 39vh;  overflow-y: scroll; overflow-x: hidden;">
+                    <ul class="px-3 pb-2 row clickable-videoClip-Frame">
                         {% for i in range (1, 5) %}
                             <il class="col-6 py-2 videoHover">
-                                <div class="" >
-                                    <img class="" src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
-                                                class="" 
+                                <div class="display" >
+                                    <img src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
+                                                class="archorpthumbnail" 
                                                 width="100%"
                                                 height="100%"
                                                 style="margin-left: auto; margin-right: auto;"
                                                 alt="...">
-                                </div>
-                                <div class="card-body p-0" style="opacity: 0.7;">
-                                    <p class="m-0 text-nowrap" style="height: 25px; overflow: hidden;">Card Tisdasasdasdfsdftle- {{i}}</p>
-                                    <p class="text-end align-end mb-0"> <i class="fa-regular fa-clock"></i> 00:00 </p>
+                                                <span class="bg-dark insidethumbnail"> 0s</span>
+                                </div> 
+                                <div class="card-body p-0 row pt-1 pb-2" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap col-4" style="overflow: hidden;"><button class="btn btn-sm btn-light text-white bg-dark " style="padding: 2px 6px !important;" onclick="handleClickFrame(event)"> Expand </button></p>
+                                    <p class="text-end mb-0 col-8 timeline" style="margin-top: auto; margin-bottom: auto;"> <i class="fa-regular fa-clock "></i> 00:00 ~  00:00 </p>
                                 </div>
                             </il>
                         {% endfor %}
