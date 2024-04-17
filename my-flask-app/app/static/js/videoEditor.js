@@ -82,3 +82,27 @@ function handleClickFrame(event) {
 // for (let i = 0; i < clickableFrame.length; i++) {
 //     clickableFrame[i].addEventListener("click", handleClickFrame,false);
 // }
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(event){
+  console.log(event.target + " : is doing nothing yet");
+  event.dataTransfer.setData("text", event.target.id);
+}
+
+function drop(event){
+    event.preventDefault();
+    var targetElement = event.target.parentElement.parentElement;
+    var data = event.dataTransfer.getData("text");
+    targetElement.innerHTML = `<il class="p-0 mb-1 inVideoItem bg-dark text-white list-group-item"">
+                                    <div class="" style="padding-left: 0px;padding-right: 0px;">
+                                        <img src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
+                                                class="bg-dark" 
+                                                width="105px"
+                                                height="80px"
+                                                alt="">
+                                    </div>
+                                </il>`;
+}
