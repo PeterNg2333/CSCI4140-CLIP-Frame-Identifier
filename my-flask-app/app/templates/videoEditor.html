@@ -1,0 +1,130 @@
+<main class="container-fluid bg-dark text-white full-height pt-2">
+    <div class="row pt-2 px-1">
+        <aside class="col-4 rounded bg-dark border border-dark pe-2" id="sideFunction">
+            <div id="mini-navbar" class="bg-color-darkgray p-2 pb-0 ">
+                <span class="p-1 px-2 mb-0 align-middle bg-dark fs-5 "> Video Clips <i class="fa-solid fa-photo-film blue-purple-mix"></i> </span>
+                <span class="p-1 ps-3 align-middle fs-6 text-light">Audio Files <i class="fa-regular fa-file-audio pe-0"></i></span>
+                <span class="p-1 ps-3 align-middle fs-6 text-light">Text <i class="fa-solid fa-text-width pe-0"></i></span>
+            </div>
+            <section class="bg-color-darkgray p-2 pt-0 " id="videoDisplay">
+                <div class="p-0 px-2 pe-2 pt-1 bg-dark ">
+                    <!-- <div class="p-1 px-2 mb-0 bg-dark fs-5 col-6">
+                        <u class="fs-6 "> Uploaded Clips </u>
+                    </div> -->
+                    <div class="p-2 px-2 mb-0 bg-dark fs-6 text-end col-12" >
+                        <button class="btn border border-white rounded my-0 btn-dark text-white " type="submit"> Add New </button>
+                    </div>
+                </div>
+                <div class="p-1 pt-0 px-2 mb-0 bg-dark videoClip" style="height: 25vh; overflow-y: scroll; overflow-x: hidden;">
+
+                    <ul class="px-2 pb-2 row clickable-videoClip">
+                        {% for i in range (1, 5) %}
+                            <il class="col-4 py-2 videoHover">
+                                <div class="" >
+                                    <img class="" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
+                                                class="" 
+                                                width="100%"
+                                                height="100%"
+                                                style="margin-left: auto; margin-right: auto;"
+                                                alt="...">
+                                </div>
+                                <div class="card-body p-0" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap" style="height: 25px; overflow: hidden;">Card Tisdasasdasdfsdftle- {{i}}</p>
+                                    <p class="text-end align-end mb-0"> <i class="fa-regular fa-clock"></i> 00:00 </p>
+                                </div>
+                            </il>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </section>
+            <section class="bg-color-darkgray p-2 pt-0" id="videoDisplay">
+                <div id="mini-navbar" class="bg-color-darkgray px-0 pb-0 pt-0">
+                    <span class="p-1 px-2 mb-0 align-middle bg-dark fs-6 "> <strong class=""> <i class="fa-solid fa-clipboard-question"></i> Find Frame </strong> - Card Title </i> </span>
+                </div>
+                <div class="p-1 mb-0 bg-dark ">
+                    <form class="form-inline mt-3 px-3" id="searchBar" method="get" action=""  >
+                        <div class="input-group" style="font-size: 0.6rem !important;">
+                            <input class="form-control mixplaceholder bg-dark text-white" type="search" placeholder="Query specific moments for the selected clips..." aria-label="Search">
+                            <button class="btn btn-outline-light text-white bg-blue-purple-mix" type="submit"><i class="fa-solid fa-magnifying-glass text-dark"></i></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="p-1 mb-0 bg-dark pt-1 videoClip w-100" style="height: 39vh;  overflow-y: scroll; overflow-x: hidden;">
+                    <ul class="px-3 pb-2 row clickable-videoClip-Frame">
+                        {% for i in range (1, 5) %}
+                            <il class="col-6 py-2 videoHover" draggable="true" ondragstart="drag(event)" >
+                                <div class="display" >
+                                    <img src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
+                                                class="archorpthumbnail" 
+                                                width="100%"
+                                                height="100%"
+                                                style="margin-left: auto; margin-right: auto;"
+                                                alt="...">
+                                                <span class="bg-dark insidethumbnail"> 0s</span>
+                                </div> 
+                                <div class="card-body p-0 row pt-1 pb-2" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap col-4" style="overflow: hidden;"><button class="btn btn-sm btn-light text-white bg-dark " style="padding: 2px 6px !important;" onclick="handleClickFrame(event)"> Expand </button></p>
+                                    <p class="text-end mb-0 col-8 timeline" style="margin-top: auto; margin-bottom: auto;"> <i class="fa-regular fa-clock "></i> 00:00 ~  00:00 </p>
+                                </div>
+                            </il>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+            </section>
+        </aside>
+        <div class="col-8 rounded bg-dark border border-dark ps-2" id="videoEditor">
+            <section class="bg-color-darkgray p-2 pb-0 " id="videoDisplay">
+                <div class="p-1 pt-2 px-2 mb-0 align-middle bg-dark fs-4"> 
+                    <div class="row">
+                        <span class="col-10 my-auto"> Preview <i class="fa-solid fa-film"></i> </span>
+                        <span class="col-2 p-1 pe-3 d-flex justify-content-end"> 
+                            <button class="text-end btn btn-sm bg-blue-purple-mix btn-outline-light px-2 fs-6" style="border: solid 2px #9865FE"> Export <i class="fa-solid fa-file-export"></i> </button > 
+                        </span>
+                    </div>
+                </div>
+                <div class="p-1 px-2 mb-0 bg-dark fs-4 pt-1" style="min-height: 200px;">
+                    <video 
+                        id="videoPlayer" 
+                        class="" 
+                        preload="metadata" 
+                        width="100%" 
+                        style="height: 60vh;"
+                        
+                        poster="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA">
+                        <source src="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/v-de3f6ca7-2db3-4689-8160-0f574a5996ad.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </section>
+            <section class="bg-color-darkgray p-2 mt-2 pt-0 " id="videoDisplay">
+                <div class="px-2 mb-0 bg-dark pt-2 " >
+                    <div class="row px-2">
+                        <div class="d-grid gap-2 pb-3 col-1 mx-auto">
+                            <button class="btn btn-primary"> <i class="fa-solid fa-play"></i> </button>
+                            <button class="btn btn-primary"> <i class="fa-solid fa-pause"></i> </button>
+                        </div>
+                        <div class="col-11 pb-3 px-0 pe-3" >
+                            <ul class="rounded list-group list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark pb-3" 
+                                style="border-left: solid 15px #333333 !important; border-right: solid 15px #333333 !important;">
+                                {%for i in range(0, 15)%}
+                                    <il class="p-0 mb-1 inVideoItem bg-dark text-white list-group-item" ondrop="drop(event)" ondragover="allowDrop(event)" ">
+                                        <div class="" style="padding-left: 0px;padding-right: 0px;">
+                                            <img src="https://cdn-icons-png.freepik.com/512/4047/4047808.png" 
+                                                    class="bg-dark" 
+                                                    width="105px"
+                                                    height="80px"
+                                                    style="opacity: 0.7;"
+                                                    alt="">
+                                        </div>
+                                    </il>
+                                {%endfor %}
+
+                            </ul>
+                        </div>
+                        
+                 </div>
+                </div>
+            </section>
+        </div>             
+    </div>
+</main>

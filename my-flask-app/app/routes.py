@@ -26,6 +26,11 @@ def search_html():
     search = app.config["title_choices"]["Search"]
     return  render_template('index.html', title=search, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
 
+@app.route('/videoEditor')
+def editor_html():
+    editor = app.config["title_choices"]["Editor"]
+    return  render_template('index.html', title=editor, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
+
 @app.route('/root')
 def root():
     return os.path.dirname(os.path.realpath(__file__))

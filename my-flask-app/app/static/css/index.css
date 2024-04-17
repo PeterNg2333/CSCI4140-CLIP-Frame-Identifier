@@ -8,6 +8,9 @@
     background: linear-gradient(110deg, #212121 40%, rgba(0, 0, 0, 0) 30%), radial-gradient(farthest-corner at 0% 0%, #212121 70%, #212121 70%);
 }
 
+.bg-color-darkgray{
+  background: #333333;
+}
 
 .full-height {
     min-height: 90vh;
@@ -71,6 +74,13 @@
     color: transparent;
 }
 
+
+
+.bg-blue-purple-mix{
+  background: linear-gradient(to right, #2ABDFE 0%, #9865FE 100%);
+  color: white !important;
+}
+
 .text-lightgray {
     color: #79797e;
 }
@@ -92,6 +102,9 @@ main {
 
 
 /* For the search bar */
+
+
+
 
 .input-group-rounded {
   /* Styles for the input field within the input group */
@@ -250,6 +263,8 @@ main {
   width: 5px; 
 } 
 
+
+
 /* Responsive Design */
 /* For the .inVideoSearchResult */
 /* In smaller screens */
@@ -278,6 +293,11 @@ main {
   .inVideoSearchResult {
     max-height: 420px;
   }
+
+  .searchItem-frame{
+    height: 80px !important;
+    width: 100px !important;
+  }
 }
 
 /* Extra large screens */
@@ -285,9 +305,129 @@ main {
   .inVideoSearchResult {
     max-height: 500px;
   }
+
+  .searchItem-frame{
+    height: 105px !important;
+    width: 130px !important;
+  }
+
+  .searchItemCard{
+    font-size: 1.2rem;
+  }
 }
 
 
 
+/* for Search Results */
+
+/* .VideoSearchResult-frame{
+    flex-wrap: wrap;
+
+} */
+
+.SearchResult-frame::-webkit-scrollbar {
+  height: 5px !important;
+}
+
+.SearchResult-frame::-webkit-scrollbar-track {
+  background: #2125298f; 
+}
+ 
+
+.SearchResult-frame::-webkit-scrollbar-thumb {
+  background: #888; 
+}
 
 
+.SearchResult-frame::-webkit-scrollbar-thumb:hover {
+  background: #fffdfd; 
+}
+
+.searchItem:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* for Video Editor */
+
+.videoHover:hover {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.searchItem:hover .card-body .card-title {
+opacity: 0.8;
+}
+
+.videoClip:active {
+  background-color: #ddd; /* Simulates click effect */
+}
+
+.videoClipClicked{
+  border: 2px solid #e6e9ee;
+  box-shadow: 0 0 10px rgba(194, 191, 191, 0.5);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.videoClip::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+.videoClip::-webkit-scrollbar-track {
+  background: #2125298f; 
+}
+ 
+
+.videoClip::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+
+.videoClip::-webkit-scrollbar-thumb:hover {
+  background: #fffdfd; 
+}
+
+.purple-blue-mix-border {
+  border: 2px solid #9865FE ;
+}
+
+.mixplaceholder::placeholder {
+  font-weight: bold;
+  /* Apply a linear gradient as the background for a visually appealing effect */
+  background: linear-gradient(to right, #2ABDFE 0%, #9865FE 100%);
+  /* Clip the background to the text to apply the gradient to the text only */
+  -webkit-background-clip: text;
+  background-clip: text;
+  /* Make the text color transparent to reveal the gradient underneath */
+  color: transparent;
+  opacity: 0.8;
+}
+
+.frame-clicked div{
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+}
+
+.display{
+  position: relative;
+}
+
+.insidethumbnail{
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  font-size: 0.8em;
+}
+
+.insidethumbnail-video{
+  position: absolute;
+  bottom: 11px;
+  right: 25px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px;
+  font-size: 0.8em;
+}
