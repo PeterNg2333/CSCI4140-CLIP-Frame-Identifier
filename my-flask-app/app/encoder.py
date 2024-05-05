@@ -9,10 +9,8 @@ import classes
 
 def encode(video_path, text_query, SAMPLING_RATE=1):
     
-    semantic_search_phrase = [f" {c}" for c in classes.CLASSES]
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    model, preprocess = clip.load('ViT-B/32', device=device)
     start_inference = time.perf_counter()
+
     # Function to load frames from the video
     def load_images(video_path):
         vr = VideoReader(video_path, ctx=cpu(0))
@@ -36,8 +34,11 @@ def encode(video_path, text_query, SAMPLING_RATE=1):
     image_vectors = np.array(image_vectors)
     print(f"Shape of image vectors: {image_vectors.shape}")
 
+    if not os.path.exists('embedded_vectors'):
+        os.makedirs('embedded_vectors', exist_ok=True)
     # Save image vectors and text vectors to files
-    np.save('image_vectors.npy', image_vectors)
+    video_name = video_path.split('/')[-1].split('.')[0]
+    np.save(f'embedded_vectors/{video_name}_image_vectors.npy', image_vectors)
 
     # Encode all text queries
     def encode_text_queries(queries):
@@ -57,14 +58,11 @@ def encode(video_path, text_query, SAMPLING_RATE=1):
     end_encoding = time.perf_counter()
     print(f"Encoding completed in {end_encoding - start_encoding:0.4f} seconds")
 
-    # Combine all encoded queries into a single numpy array
-    all_query_vectors = np.vstack(encoded_all_queries)
+    query = text_query.split(' ')[-1]
 
-    np.save('text_vectors.npy', all_query_vectors[:-1])
-
-    print(f"Shape of all query vectors: {all_query_vectors.shape}")
+    np.save(f'embedded_vectors/{query}_text_vectors.npy', encoded_all_queries)
 
     end_inference = time.perf_counter()
-    print(f"Total encoding time: {end_inference - start_inference:0.4f} seconds")
+    print(f"Total inference time: {end_inference - start_inference:0.4f} seconds")
 
     print("Encoding completed successfully")

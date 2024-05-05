@@ -10,9 +10,6 @@ import time
 import classes
 
 def search(video_path, text_query, k):
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    model, preprocess = clip.load('ViT-B/32', device=device)
-    print("Model loaded successfully")
 
     # Video path and text query
     class_list = [f" {c}" for c in classes.CLASSES]
@@ -41,7 +38,8 @@ def search(video_path, text_query, k):
     video_name = video_path.split('/')[-1].split('.')[0]
     image_vectors = np.load(f'embedded_vectors/{video_name}_image_vectors.npy')
     query = text_query.split(' ')[-1]
-    all_query_vectors = np.load(f'embedded_vectors/{query}_text_vectors.npy')
+    encoded_all_queries = np.load(f'embedded_vectors/{query}_text_vectors.npy')
+    all_query_vectors = np.vstack(encoded_all_queries)
 
     print(f"Number of frames processed: {len(image_vectors)}")
     image_vectors = np.array(image_vectors).astype(np.float32)
@@ -51,11 +49,8 @@ def search(video_path, text_query, k):
     # Create a FAISS index
     index = faiss.IndexFlatIP(image_vectors.shape[1])
     index.add(image_vectors)
-
-    text_inputs = clip.tokenize(text_query).to(device)
-    with torch.no_grad():
-        text_features = model.encode_text(text_inputs).cpu().numpy().astype(np.float32)
-    print(f"Shape of text features: {text_features.shape}")
+    
+    text_features = np.array(encoded_all_queries[-1])
     faiss.normalize_L2(text_features)
 
     # Perform the image pre-selection search
