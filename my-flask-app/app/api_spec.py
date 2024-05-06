@@ -105,7 +105,7 @@ def search_frame(video_path: str, text_query: str, k: int):
             meta = json.load(f)
             length = meta['length']
         if length <= 60:
-            new_k = 5
+            new_k = 6
         else: 
             new_k =length//10
         k = min(k, new_k)

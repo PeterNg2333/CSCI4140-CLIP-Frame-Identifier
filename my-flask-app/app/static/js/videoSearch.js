@@ -62,7 +62,7 @@ function createHTML(fileMeta, queryString, root){
                                     <section class="card-body row pt-0" >
                                         <div class=" ps-3 ">
                                             <!-- <ul class="card-title list-group list-group-horizontal-sm rounded border border-white SearchResult-frame" style="overflow-y: hidden; overflow-x: scroll; max-width: 100%; display: inline-block"> -->
-                                            <ul id="f-${fileMeta['name'].split(".")[0]}-SearchResult-frame" class="list-group SearchResult list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark ">
+                                            <ul id="f-${fileMeta['name'].split(".")[0]}-SearchResult" class="list-group SearchResult list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark ">
                                                 <p class="blue-purple-mix text-white" id="innearText" style="opacity: 0.6;">  
                                                     <img src="https://portal.ufvjm.edu.br/a-universidade/cursos/grade_curricular_ckan/loading.gif/@@images/image.gif" 
                                                         class="pb-1" 
@@ -87,7 +87,6 @@ function createHTML(fileMeta, queryString, root){
 }
 
 function getInVideoFrames(fileMeta, queryString, root){
-    console.log(query)
     fetch('/getInVideoFrames', {
         method: 'POST', body: JSON.stringify({queryString: queryString, fileName: fileMeta['name']}), headers: {'Content-Type': 'application/json'}
       }).then(response => {
@@ -105,41 +104,60 @@ function getInVideoFrames(fileMeta, queryString, root){
       }).then(data => {
         // console.log(data)
         // Sort the data
-        data.sort(function(a, b){return a - b});
-        console.log("#"+`f-${fileMeta['name']}-SearchResult`)
         if (data.length > 0){
-            result = createHTML(fileMeta, queryString, root)
-            frame = result.querySelector("ul")
-            frame.innerHTML = ""
-            var fid = frame.id
-            var temp
-            var new_frame = document.querySelector("#"+fid)
-            if (new_frame != null){
-                new_frame.innerHTML = ""
-                temp = document.createElement("div")
-                temp.innerHTML = `
-                <il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
-                    <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
-                        <img class="searchItem-frame" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
-                                class="" 
-                                width="100px"
-                                height="80px"
-                                alt="...">
-                    </div>
-                    <div class="col-6 px-0 pt-1">
-                        <p class="card-text"><small class="text-muted">-0.01</small></p>
-                    </div>
-                </il>
-            `
-            new_frame.appendChild(temp)
-            }
+            var result = createHTML(fileMeta, queryString, root)
+            setTimeout(function(){
+                var frame = result.querySelector("ul")
+                var fid = frame.id
+                var new_frame = document.querySelector("#"+fid)
+                if (new_frame == null){
+                    while (document.querySelector("#"+fid) == null){
+                        console.log("waiting")
+                    }
+                }
+                if (new_frame != null){
+                    frame.innerHTML = ""
+                    var temp
+                    data.sort(function(a, b){return a - b});
+                    console.log(data)
+                    for (var i = 0; i < data.length; i++){
+                        temp = document.createElement("div")
+                        url = "static/video/"+fileMeta['name']
+                        file_name = fileMeta['name'].split(".")[0]
+                        temp.innerHTML = `<il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
+                            <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
+                                <video class="searchItem-frame" " 
+                                        class="" 
+                                        id = v-${i}-${file_name}
+                                        width="100px"
+                                        height="80px"
+                                        muted
+                                        alt="...">
+                                    <source src="${url}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="col-6 px-0 pt-1">
+                                <p class="card-text"><small class="text-muted">-0.01</small></p>
+                            </div>
+                            </il>`
+                        
+                    new_frame.appendChild(temp)
+                    var videoImg = document.querySelector(`#v-${i}-${file_name}`)
+                    videoImg.currentTime = Math.floor(data[i]/30)
+                    videoImg.pause()
+                    }
+                }
+            }, 2000)
+            
         }else{
             root.innerHTML = ""
+            
         }
 
-
       });
+      
   }
+
 
 
 
