@@ -32,12 +32,14 @@ function Initization(){
         // console.log(data)
         count = 0 
         data.forEach(element => {
+            setTimeout(function(){
             // searchVideoOneByOne(data[i], query)
             console.log(element)
             var root = document.querySelector("#video-container")
             getInVideoFrames(element, query, root)
 
             count += 1
+            }, 3000)
         });
     });
 }
@@ -110,11 +112,11 @@ function getInVideoFrames(fileMeta, queryString, root){
                 var frame = result.querySelector("ul")
                 var fid = frame.id
                 var new_frame = document.querySelector("#"+fid)
-                if (new_frame == null){
-                    while (document.querySelector("#"+fid) == null){
-                        console.log("waiting")
-                    }
-                }
+                // if (new_frame == null){
+                //     while (document.querySelector("#"+fid) == null){
+                //         console.log("waiting")
+                //     }
+                // }
                 if (new_frame != null){
                     frame.innerHTML = ""
                     var temp
@@ -147,7 +149,7 @@ function getInVideoFrames(fileMeta, queryString, root){
                     videoImg.pause()
                     }
                 }
-            }, 2000)
+            }, 100)
             
         }else{
             root.innerHTML = ""

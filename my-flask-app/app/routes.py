@@ -53,6 +53,8 @@ def search_html():
     query = request.args.get('query')
     search = app.config["title_choices"]["Search"]
     video_list = api_spec.get_all_videos()
+    if not os.path.exists(f'./app/embedded_vectors/{query}_text_vectors.npy'):
+        api_spec.encode_text(query)
     return  render_template('index.html', title=search, APP_CONFIG=app.config, query=query, video_list=video_list, list_files=app.config['templates_list_files'])
 
 @app.route('/videoEditor')

@@ -16,7 +16,7 @@ def download(link:str, path=PATH, name=""):
     video_720p=youtube.streams.get_by_resolution("720p")
     # name of the video is the first 15 characters of the video title (Without spaces)
     if name == "":
-        name = youtube.title[:15].replace(" ", "") + ".mp4"
+        name = youtube.title[:15].replace(" ", "").replace(",", "").replace(".", "").replace("!", "") + ".mp4"
     else:
         name = name + ".mp4"
     meta = {
