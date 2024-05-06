@@ -50,8 +50,10 @@ def player_html():
 
 @app.route('/videoSearch')
 def search_html():
+    query = request.args.get('query')
     search = app.config["title_choices"]["Search"]
-    return  render_template('index.html', title=search, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
+    video_list = api_spec.get_all_videos()
+    return  render_template('index.html', title=search, APP_CONFIG=app.config, query=query, video_list=video_list, list_files=app.config['templates_list_files'])
 
 @app.route('/videoEditor')
 def editor_html():
@@ -85,4 +87,33 @@ def update_url():
     else:
         ## state code become 500
         return f"Error downloading video: {name}", 500
+    
+@app.route('/getMetaList', methods=['GET'])
+def get_meta_list():
+    video_list = api_spec.get_all_videos()
+    video_mata = api_spec.get_all_meta(video_list)
+    return json.dumps(video_mata)
+
+
+
+
+# @app.route('/getMatchedVideo', methods=['POST'])
+# def search_video():
+#     data_json = request.get_json()
+#     file_name = data_json['fileName']
+#     print("Searching video" + file_name)
+#     video_path = f"./data/video/{file_name}"
+#     queryString = data_json['queryString']
+#     result = api_spec.search_frame(video_path, queryString, 5)
+#     if result != []:
+#         name = file_name.split('.')[0]
+#         json_file = f'./data/meta/{name}.json'
+#         if os.path.exists(json_file):
+#             with open(json_file) as f:
+#                 video_mata = json.load(f)
+#         else:
+#             video_mata = {}
+#         return json.dumps(video_mata)
+#     else:
+#         return json.dumps([False])
 

@@ -149,12 +149,12 @@ function getInVideoFrames(){
             var frame = data[i]
             var frameDiv = document.createElement("div")
             frameDiv.innerHTML = `<il class="mb-3 row ps-0 inVideoItem hover-shadow" onclick="jumpToVideo(${Math.floor(data[i]/30)})">
-                                    <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-8" style="padding-left: 0px;padding-right: 0px;">
                                       <video 
                                               class="" 
                                               id = v-${i}
-                                              width="80px"
-                                              height="60px"
+                                              width="125px"
+                                              height="95px"
                                               alt="..."
                                               muted
                                               autoplay="autoplay"
@@ -162,18 +162,14 @@ function getInVideoFrames(){
                                               <source src="${url}" type="video/mp4">
                                       </video>
                                     </div>
-                                    <div class="col-6 px-0 pt-1">
-                                        <h6 class="card-title mb-0"> Result - ${i}</h6>
-                                        <p class="card-text"><small class="text-muted">- ${Math.floor(data[i]/30)} s </small></p>
+                                    <div class="col-3 px-0 pt-3">
+                                        <p class="card-text blue-purple-mix"><a class="text-muted" style="margin-top=auto; margin-bottom:auto;"> - ${Math.floor(data[i]/30)} s </a> </p>
                                     </div>
                                 </il>`
             videoFrames.appendChild(frameDiv)
             var videoImg = document.querySelector(`#v-${i}`)
             videoImg.currentTime = Math.floor(data[i]/30)
             videoImg.pause()
-            videoImg.addEventListener("hover", function(){
-              videoImg.play()
-            })
           }
 
           // console.log(data.html)

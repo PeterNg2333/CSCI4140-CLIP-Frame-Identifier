@@ -58,29 +58,30 @@ def encode_text(text_query: str):
     return encoder.encode_text(text_query)
 
 # Could you use the first frame in search_frame since it's already fast enough. Also if we do search separatel, it will generate repeated frames.
-def search_video(video_path: str, text_query: str) -> str:
-    '''
-    Search for the particular video that matches the text query. Once there are at least 1 frame that matches the text query, the video is considered a match.
-    :param video_path: The path to the video file.
-    :param text_query: The text query.
-    :return: the result of the search matched or not matched.
-    '''
-    try:
-        print("Searching video")
-        ## If text_query is empty, encode it first
-        if not os.path.exists(f'./app/embedded_vectors/{text_query}_text_vectors.npy'):
-            encode_text(text_query)
-        result, video_path = inference.search(video_path, text_query, 1)
-        print("Video search completed successfully")
-        str_result = []
-        for i in result:
-            # Convert numpy.int64 to python string
-            temp_str = str(i)
-            str_result.append(temp_str)
-        return str_result
-    except Exception as e:
-        print(f"Error searching video: {e}")
-        return f"Error searching video: {e}"
+# def search_video(video_path: str, text_query: str) -> str:
+#     '''
+#     Search for the particular video that matches the text query. Once there are at least 1 frame that matches the text query, the video is considered a match.
+#     :param video_path: The path to the video file.
+#     :param text_query: The text query.
+#     :return: the result of the search matched or not matched.
+#     '''
+#     try:
+#         print("Searching video")
+#         ## If text_query is empty, encode it first
+#         if not os.path.exists(f'./app/embedded_vectors/{text_query}_text_vectors.npy'):
+#             print("Encoding text")
+#             encode_text(text_query)
+#         result, video_path = inference.search(video_path, text_query, 1)
+#         print("Video search completed successfully")
+#         str_result = []
+#         for i in result:
+#             # Convert numpy.int64 to python string
+#             temp_str = str(i)
+#             str_result.append(temp_str)
+#         return str_result
+#     except Exception as e:
+#         print(f"Error searching video: {e}")
+#         return f"Error searching video: {e}"
 
 # In inference.py, return a list of frames and the original video_path
 def search_frame(video_path: str, text_query: str, k: int):

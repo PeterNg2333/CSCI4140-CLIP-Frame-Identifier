@@ -38,3 +38,15 @@ function updateYTURL(event){
         location.reload()
     });
 }
+
+function searchframe(event){
+    // Get the text query from the input field
+    var queryString = document.querySelector("#videoSearch").value
+    // Load new search page by getting the query string from the url
+    if (queryString == null || queryString == "") {
+        alert("You must provide a valid query string");
+        return;
+    }
+    url = "./videoSearch?query=" + queryString
+    location.href = url
+}

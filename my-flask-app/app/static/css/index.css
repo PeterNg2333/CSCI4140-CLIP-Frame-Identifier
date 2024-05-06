@@ -435,4 +435,5 @@ opacity: 0.8;
 .hover-shadow:hover {
   box-shadow: 0 0 20px rgba(221, 220, 220, 0.5);
   transition: box-shadow 0.3s ease-in-out;
+  opacity: 0.9;
 }
