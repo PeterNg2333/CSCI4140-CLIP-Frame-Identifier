@@ -3,7 +3,7 @@
 # It is used to generate the OpenAPI specification for the app.
 '''
 
-
+# In download.py
 def download_video(url: str) -> str:
     '''
     Download a youtube video from a URL.
@@ -13,7 +13,8 @@ def download_video(url: str) -> str:
     '''
     pass
 
-def encode_video(video_path: str) -> str:
+# In encoder.py
+def encode_video(video_path: str, SAMPLING_RATE=1):
     '''
     Encode the video frames and text query.
     :param video_path: The path to the video file.
@@ -22,7 +23,8 @@ def encode_video(video_path: str) -> str:
     '''
     pass
 
-def encode_text(text_query: str) -> str:
+# In encoder.py
+def encode_text(text_query: str):
     '''
     Encode the text query.
     :param text_query: The text query.
@@ -31,6 +33,7 @@ def encode_text(text_query: str) -> str:
     '''
     pass
 
+# Could you use the first frame in search_frame since it's already fast enough. Also if we do search separatel, it will generate repeated frames.
 def search_video(video_path: str, text_query: str) -> str:
     '''
     Search for the particular video that matches the text query. Once there are at least 1 frame that matches the text query, the video is considered a match.
@@ -40,7 +43,8 @@ def search_video(video_path: str, text_query: str) -> str:
     '''
     pass
 
-def search_frame(video_path: str, text_query: str, k: int) -> str:
+# In inference.py, return a list of frames and the original video_path
+def search_frame(video_path: str, text_query: str, k: int):
     '''
     Search for the particular frame that matches the text query.
     :param video_path: The path to the video file.
