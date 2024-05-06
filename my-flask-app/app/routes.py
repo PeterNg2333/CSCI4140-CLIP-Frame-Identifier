@@ -19,7 +19,6 @@ def index_html():
     home = app.config["title_choices"]["Home"]
     video_list = api_spec.get_all_videos()
     video_mata = api_spec.get_all_meta(video_list)
-    print(video_mata[0])
     length = len(video_list)
     return  render_template('index.html', 
                             title=home, 
@@ -63,8 +62,27 @@ def editor_html():
 def root():
     return os.path.dirname(os.path.realpath(__file__))
 
+@app.route('/getInVideoFrames', methods=['POST'])
+def search_frame():
+    data_json = request.get_json()
+    file_name = data_json['fileName']
+    video_path = f"./data/video/{file_name}"
+    queryString = data_json['queryString']
+    k = 7
+    sorted_cluster_frames= api_spec.search_frame(video_path, queryString, int(k))
+    print(sorted_cluster_frames)
+    return json.dumps(sorted_cluster_frames)
 
-@app.route('/time')
-def get_time():
-    return {"time": time.time()}
+@app.route('/uploadURL', methods=['POST'])
+def update_url():
+    ## Get the data from body
+    url_json = request.get_json()
+    url = url_json['url']
+    print(url)
+    name, state = api_spec.download_video(url)
+    if (state):
+        return f"Downloaded video: {name}", 200
+    else:
+        ## state code become 500
+        return f"Error downloading video: {name}", 500
 

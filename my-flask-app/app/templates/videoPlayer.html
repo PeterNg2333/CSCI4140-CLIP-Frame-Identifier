@@ -62,14 +62,12 @@
                         <div id="openinVideoSearcher" class="blue-purple-mix d-inline col-2"><i  class="fa-solid fa-angles-right "  onclick="closeVideoSearcher()"></i> </div>
                         <div class="col-10 py-1 ps-1">
                             <div class="inVideoSearcherInput">
-                                <input class="text-white bg-dark rounded border border-white" placeholder="Find frames"></input>
-                                <span class="ps-1"><i class="fa-solid fa-magnifying-glass" onclick="getInVideoFrames()"></i></span>
+                                <input class="text-white bg-dark rounded border border-white" placeholder="Find frames" id="text-query-searchFrame"></input>
+                                <span class="ps-1"><i class="fa-solid fa-magnifying-glass" onclick="getInVideoFrames(event)"></i></span>
                             </div>
                             <div class="pt-3 inVideoSearchResult" style="overflow-y: scroll; min-height: 200px; overflow-x: hidden;">
-                                <ul class="ps-1 ">
-                                    {%for i in range(0, 8)%}
-                                        {%  include './components/inVideoItem.html' %}
-                                    {%endfor%}
+                                <ul class="ps-1" id="videoFrames">
+                                    <p class="blue-purple-mix" id="innearText"> Type it, Find it </p>
                                     
                                 </ul>
                             </div>

@@ -101,6 +101,90 @@ function closeVideoSearcher(){
   openinVideoSearcher.style.display = "block";
 }
 
+function getInVideoFrames(){
+    // Get the query string from the url
+    var url = videoPlayer.querySelector("source").src;
+    var fileName = url.split("/video/")[1]
+    var queryString = document.querySelector("#text-query-searchFrame").value
+    if (queryString == null || queryString == "") {
+        alert("You must provide a valid query string");
+        return;
+    }
+    else{
+        // display a loading spinner
+        var videoFrames = document.getElementById("videoFrames")
+        videoFrames.innerHTML = `<p class="blue-purple-mix text-white" id="innearText">  
+                                    <img src="https://portal.ufvjm.edu.br/a-universidade/cursos/grade_curricular_ckan/loading.gif/@@images/image.gif" 
+                                    class="pt-3" 
+                                    width="35px"
+                                    height="40px"
+                                    alt="..."
+                                    style="margin-left: auto; margin-right: auto; display: block; "
+                                    > 
+                                    It may take a few seconds to load the results specially for the unseen query strings
+                                  </p>`
+
+        // Send the url to the server using fetch
+        fetch('/getInVideoFrames', {
+          method: 'POST', body: JSON.stringify({queryString: queryString, fileName: fileName}), headers: {'Content-Type': 'application/json'}
+        }).then(response => {
+          if (response.ok) {
+            // if the server responds with a 200 status code, hide the loading spinner
+            // dialog.close()
+          }else{
+            // if the server responds with an error, display an alert message
+            alert("An error occurred, please try again")
+            // dialog.close()
+            // Refresh the page to reset the controls
+          }
+          // location.reload()
+          return response.json()
+        }).then(data => {
+          // console.log(data)
+          document.querySelector("#text-query-searchFrame").value = ""
+          videoFrames.innerHTML = ""
+          // Sort the data
+          data.sort(function(a, b){return a - b});
+          for (var i = 0; i < data.length; i++){
+            var frame = data[i]
+            var frameDiv = document.createElement("div")
+            frameDiv.innerHTML = `<il class="mb-3 row ps-0 inVideoItem hover-shadow" onclick="jumpToVideo(${Math.floor(data[i]/30)})">
+                                    <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
+                                      <video 
+                                              class="" 
+                                              id = v-${i}
+                                              width="80px"
+                                              height="60px"
+                                              alt="..."
+                                              muted
+                                              autoplay="autoplay"
+                                              >
+                                              <source src="${url}" type="video/mp4">
+                                      </video>
+                                    </div>
+                                    <div class="col-6 px-0 pt-1">
+                                        <h6 class="card-title mb-0"> Result - ${i}</h6>
+                                        <p class="card-text"><small class="text-muted">- ${Math.floor(data[i]/30)} s </small></p>
+                                    </div>
+                                </il>`
+            videoFrames.appendChild(frameDiv)
+            var videoImg = document.querySelector(`#v-${i}`)
+            videoImg.currentTime = Math.floor(data[i]/30)
+            videoImg.pause()
+            videoImg.addEventListener("hover", function(){
+              videoImg.play()
+            })
+          }
+
+          // console.log(data.html)
+        });
+    }
+    // alert(queryString + " " + file_name)
+}
+
+function jumpToVideo(time){
+  videoPlayer.currentTime = time;
+}
 
 // This code adds event listeners to the video player for updating the progress bar and allowing the user to jump to a specific time in the video.
 videoPlayer.addEventListener("timeupdate", handleProgress);

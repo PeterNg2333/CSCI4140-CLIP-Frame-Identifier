@@ -29,6 +29,7 @@ def download_video(url: str) -> str:
             print("Encoding video")
             encoder.encode_video(f'./data/video/{name}')
             print("Encoding completed successfully")
+            return name, True
 
     except Exception as e:
         print(f"Error downloading video: {e}")
@@ -65,8 +66,18 @@ def search_video(video_path: str, text_query: str) -> str:
     :return: the result of the search matched or not matched.
     '''
     try:
+        print("Searching video")
+        ## If text_query is empty, encode it first
+        if not os.path.exists(f'./app/embedded_vectors/{text_query}_text_vectors.npy'):
+            encode_text(text_query)
         result, video_path = inference.search(video_path, text_query, 1)
-        return result
+        print("Video search completed successfully")
+        str_result = []
+        for i in result:
+            # Convert numpy.int64 to python string
+            temp_str = str(i)
+            str_result.append(temp_str)
+        return str_result
     except Exception as e:
         print(f"Error searching video: {e}")
         return f"Error searching video: {e}"
@@ -82,8 +93,29 @@ def search_frame(video_path: str, text_query: str, k: int):
     :return the sorted list of frames that match the text query.
     '''
     try:
+        print("Searching frame")
+        ## If text_query is empty, encode it first
+        if not os.path.exists(f'./app/embedded_vectors/{text_query}_text_vectors.npy'):
+            encode_text(text_query)
+
+        ## Decide the number of k based on length of video
+        meta_path = f'./data/meta/{video_path.split("/")[-1].split(".")[0]}.json'
+        with open(meta_path) as f:
+            meta = json.load(f)
+            length = meta['length']
+        if length <= 60:
+            new_k = 5
+        else: 
+            new_k =length//10
+        k = min(k, new_k)
         result, video_path = inference.search(video_path, text_query, k)
-        return result
+        print("Frame search completed successfully")
+        str_result = []
+        for i in result:
+            # Convert numpy.int64 to python string
+            temp_str = str(i)
+            str_result.append(temp_str)
+        return  str_result
     except Exception as e:
         print(f"Error searching frame: {e}")
         return f"Error searching frame: {e}"
