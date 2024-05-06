@@ -31,6 +31,14 @@ def index_html():
 def player_html():
     player = app.config["title_choices"]["Player"]
     video_query=request.args.get('video_name')
+    try:
+        time = request.args.get('time')
+        if time is not None:
+            time = int(time)
+        else:
+            time = 0
+    except:
+        time = 0
     print(video_query)
     # get the meta data of the target video with the video query
     name = video_query.split('.')[0]
@@ -46,6 +54,7 @@ def player_html():
                             APP_CONFIG=app.config, 
                             video_query=video_query,
                             video_mata=video_mata,
+                            time=time,
                             list_files=app.config['templates_list_files'])
 
 @app.route('/videoSearch')

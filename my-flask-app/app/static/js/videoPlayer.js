@@ -4,6 +4,7 @@
 const videoPlayer = document.querySelector("#videoPlayer");
 const videoContainer = document.querySelector(".video-container");
 
+
 // This code checks if the browser supports the video element and hides the default video controls if it does.
 const videoWorks = !! document.createElement("video").canPlayType;
 if (videoWorks) {
@@ -145,31 +146,38 @@ function getInVideoFrames(){
           videoFrames.innerHTML = ""
           // Sort the data
           data.sort(function(a, b){return a - b});
-          for (var i = 0; i < data.length; i++){
-            var frame = data[i]
-            var frameDiv = document.createElement("div")
-            frameDiv.innerHTML = `<il class="mb-3 row ps-0 inVideoItem hover-shadow" onclick="jumpToVideo(${Math.floor(data[i]/30)})">
-                                    <div class="col-8" style="padding-left: 0px;padding-right: 0px;">
-                                      <video 
-                                              class="" 
-                                              id = v-${i}
-                                              width="125px"
-                                              height="95px"
-                                              alt="..."
-                                              muted
-                                              autoplay="autoplay"
-                                              >
-                                              <source src="${url}" type="video/mp4">
-                                      </video>
-                                    </div>
-                                    <div class="col-3 px-0 pt-3">
-                                        <p class="card-text blue-purple-mix"><a class="text-muted" style="margin-top=auto; margin-bottom:auto;"> - ${Math.floor(data[i]/30)} s </a> </p>
-                                    </div>
-                                </il>`
-            videoFrames.appendChild(frameDiv)
-            var videoImg = document.querySelector(`#v-${i}`)
-            videoImg.currentTime = Math.floor(data[i]/30)
-            videoImg.pause()
+          if (data.length == 0){
+            videoFrames.innerHTML = `<p class="blue-purple-mix" id="innearText">  
+                                      No results found...
+                                    </p>`
+          }
+          else{
+            for (var i = 0; i < data.length; i++){
+              var frame = data[i]
+              var frameDiv = document.createElement("div")
+              frameDiv.innerHTML = `<il class="mb-3 row ps-0 inVideoItem hover-shadow" onclick="jumpToVideo(${Math.floor(data[i]/30)})">
+                                      <div class="col-8" style="padding-left: 0px;padding-right: 0px;">
+                                        <video 
+                                                class="" 
+                                                id = v-${i}
+                                                width="125px"
+                                                height="95px"
+                                                alt="..."
+                                                muted
+                                                autoplay="autoplay"
+                                                >
+                                                <source src="${url}" type="video/mp4">
+                                        </video>
+                                      </div>
+                                      <div class="col-3 px-0 pt-3">
+                                          <p class="card-text blue-purple-mix"><a class="text-muted" style="margin-top=auto; margin-bottom:auto;"> - ${Math.floor(data[i]/30)} s </a> </p>
+                                      </div>
+                                  </il>`
+              videoFrames.appendChild(frameDiv)
+              var videoImg = document.querySelector(`#v-${i}`)
+              videoImg.currentTime = Math.floor(data[i]/30)
+              videoImg.pause()
+            }
           }
 
           // console.log(data.html)

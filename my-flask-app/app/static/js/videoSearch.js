@@ -46,7 +46,7 @@ function Initization(){
 
 function createHTML(fileMeta, queryString, root){
     var ResultItemDiv = document.createElement("div") 
-    ResultItemDiv.innerHTML = `<div class="card mb-3 bg-dark " style="max-width: 100%;" onclick="window.location.href='videoPlayer?video_name=${fileMeta['name'] }'" id="f-${ fileMeta['name']}" >
+    ResultItemDiv.innerHTML = `<div class="card mb-3 bg-dark " style="max-width: 100%;" onclick="window.location.href='videoPlayer?video_name=${fileMeta['name'] }';event.stopPropagation()" id="f-${ fileMeta['name']}" >
                         <div class="row g-0 searchItem">
                                 <div class="col-md-5 ps-2 py-2" >
                                     <img src="${fileMeta['thumbnail']}"  
@@ -126,7 +126,7 @@ function getInVideoFrames(fileMeta, queryString, root){
                         temp = document.createElement("div")
                         url = "static/video/"+fileMeta['name']
                         file_name = fileMeta['name'].split(".")[0]
-                        temp.innerHTML = `<il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
+                        temp.innerHTML = `<il class="ps-0 pt-0 hover-shadow inVideoItem bg-dark text-white list-group-item mx-1" onclick="window.location.href='videoPlayer?video_name=${fileMeta['name'] }&time=${Math.floor(data[i]/30)}';event.stopPropagation()" ">
                             <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
                                 <video class="searchItem-frame" " 
                                         class="" 
