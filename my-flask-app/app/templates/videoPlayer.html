@@ -10,8 +10,8 @@
                 preload="metadata" 
                 width="100%" 
                 height="100%" 
-                poster="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA">
-                <source src="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/v-de3f6ca7-2db3-4689-8160-0f574a5996ad.mp4" type="video/mp4">
+                poster="{{ video_mata['thumbnail'] }}">
+                <source src="{{ url_for('static', filename='video/'+video_query) }}" type="video/mp4">
             </video>
             <div class="controls inVideoControl-center pt-2">
                 <div class="controls-btn row"> <!--align-items-center justify-content-center  margin-left: auto; margin-right: auto;-->

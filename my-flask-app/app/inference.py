@@ -7,7 +7,7 @@ import faiss
 import torch
 from sklearn.cluster import KMeans
 import time
-import classes
+from app import classes
 
 def search(video_path, text_query, k):
 
@@ -36,14 +36,18 @@ def search(video_path, text_query, k):
 
 
     video_name = video_path.split('/')[-1].split('.')[0]
-    image_vectors = np.load(f'embedded_vectors/{video_name}_image_vectors.npy')
+    # check the current directory contain app folder or not 
+    app_folder = ''
+    if os.path.exists('app'):
+        app_folder = './app/'
+    image_vectors = np.load(app_folder+f'embedded_vectors/{video_name}_image_vectors.npy')
     query = text_query.split(' ')[-1]
-    encoded_all_queries = np.load(f'embedded_vectors/{query}_text_vectors.npy')
+    encoded_all_queries = np.load(app_folder+f'embedded_vectors/{query}_text_vectors.npy')
     all_query_vectors = np.vstack(encoded_all_queries)
 
-    print(f"Number of frames processed: {len(image_vectors)}")
+    # print(f"Number of frames processed: {len(image_vectors)}")
     image_vectors = np.array(image_vectors).astype(np.float32)
-    print(f"Shape of image vectors: {image_vectors.shape}")
+    # print(f"Shape of image vectors: {image_vectors.shape}")
     faiss.normalize_L2(image_vectors)
 
     # Create a FAISS index
@@ -79,12 +83,12 @@ def search(video_path, text_query, k):
             shortlisted_frames.append(frame_idx)
 
     # Display shortlisted frames
-    print(f"Number of frames in shortlist: {len(shortlisted_frames)}")
-    for frame_number in shortlisted_frames:
-        print(f"Frame {frame_number * SAMPLING_RATE} is in the shortlist.")
+    # print(f"Number of frames in shortlist: {len(shortlisted_frames)}")
+    # for frame_number in shortlisted_frames:
+    #     print(f"Frame {frame_number * SAMPLING_RATE} is in the shortlist.")
 
     end_inference = time.perf_counter()
-    print(f"Total inference time: {end_inference - start_inference:0.4f} seconds")
+    # print(f"Total inference time: {end_inference - start_inference:0.4f} seconds")
 
     if len(shortlisted_frames) > k:
         shortlisted_vectors = np.array([image_vectors[idx] for idx in shortlisted_frames])
@@ -92,7 +96,7 @@ def search(video_path, text_query, k):
         start_diversify = time.perf_counter()
         kmeans = KMeans(n_clusters=k, random_state=0).fit(shortlisted_vectors)
         end_diversify = time.perf_counter()
-        print(f"Diversification time: {end_diversify - start_diversify:0.4f} seconds")
+        # print(f"Diversification time: {end_diversify - start_diversify:0.4f} seconds")
 
         # Find the first frame and select it in each cluster
         cluster_frame_indices = {i: [] for i in range(k)}
@@ -123,10 +127,12 @@ def search(video_path, text_query, k):
             Image.fromarray(frame).save(f"{output_folder}/frame_{real_frame_number}.jpg")
             print(f"Saved frame {real_frame_number}.")
 
+print("loaded inference.py")
 
-video_path = '../VideoDataAirport/amsterdam_airport_2.mp4' #@param {type:"string"}
-text_query = "a man or a woman in orange coat" #@param {type:"string"}
-k = 5 #@param {type:"integer"}
+if __name__ == "__main__":
+    video_path = '../VideoDataAirport/amsterdam_airport_2.mp4' #@param {type:"string"}
+    text_query = "a man or a woman in orange coat" #@param {type:"string"}
+    k = 5 #@param {type:"integer"}
 
-result, _ = search(video_path, text_query, k)
-print(result)
+    result, _ = search(video_path, text_query, k)
+    print(result)

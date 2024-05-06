@@ -5,7 +5,7 @@ import clip
 from decord import VideoReader, cpu
 import torch
 import faiss
-import classes
+from app import classes
 import os
 
 def encode_video(video_path, SAMPLING_RATE=1):
@@ -42,7 +42,7 @@ def encode_video(video_path, SAMPLING_RATE=1):
         os.makedirs('embedded_vectors', exist_ok=True)
     # Save image vectors and text vectors to files
     video_name = video_path.split('/')[-1].split('.')[0]
-    np.save(f'embedded_vectors/{video_name}_image_vectors.npy', image_vectors)
+    np.save(f'./app/embedded_vectors/{video_name}_image_vectors.npy', image_vectors)
 
     print("Encoding video completed successfully")
 
@@ -75,13 +75,12 @@ def encode_text(text_query):
 
     query = text_query.split(' ')[-1]
 
-    np.save(f'embedded_vectors/{query}_text_vectors.npy', encoded_all_queries)
+    np.save(f'./app/embedded_vectors/{query}_text_vectors.npy', encoded_all_queries)
 
     print("Encoding text completed successfully")
     
 
 def encode(video_path, text_query, SAMPLING_RATE=1):
-    
     start_inference = time.perf_counter()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -146,3 +145,6 @@ def encode(video_path, text_query, SAMPLING_RATE=1):
     print(f"Total inference time: {end_inference - start_inference:0.4f} seconds")
 
     print("Encoding completed successfully")
+
+
+print("loaded encoder.py")

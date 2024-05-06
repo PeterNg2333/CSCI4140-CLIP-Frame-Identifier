@@ -1,13 +1,22 @@
-<div class="col-3 px-2 py-3 videoItem" >
-    <div class="px-2 card border-dark rounded bg-dark"  onclick="window.location.href='/videoPlayer'">
+<div class="col-3 px-2 py-3 videoItem" id="{{ video_mata[i]['name'] }}" >
+    <div class="px-2 card border-dark rounded bg-dark"  onclick="window.location.href='videoPlayer?video_name={{video_mata[i]['name'] }}'">
         <div class="image-container"> 
-            <img src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" class="card-img-top rounded-image" alt="...">
+            <img src="
+            {{ video_mata[i]['thumbnail'] }}
+            " class="card-img-top rounded-image" alt="...">
             <span class="caption-leftTop border-dark rounded">Your Caption Here</span>
-            <span class="caption-rightTop border-dark rounded">{{i*5}} m</span>
+
+            <span class="caption-rightTop border-dark rounded">{{ video_mata[i]['length']//60 }} m {{ video_mata[i]['length']%60 }} s</span>
         </div>
         <div class="card-body row">
-            <h5 class="card-title col-8">Card Title - {{i}}</h5>
-            <p class="text-end card-title col-4"> <i class="fa-solid fa-eye" style="color: #ffffff;"></i> {{i*12}} K </p>
+            <h5 class="card-title col-9" style="word-wrap:break-word !important;">{{ video_mata[i]['title'] }}</h5>
+            <p class="text-end card-title col-3"> <i class="fa-solid fa-eye" style="color: #ffffff;"></i> 
+                {% if video_mata[i]['views'] > 1000000 %}
+                    {{ video_mata[i]['views']//1000000 }} M 
+                {% else %}
+                    {{ video_mata[i]['views']//1000 }} K 
+                {% endif %}
+            </p>
         </div>
     </div>
 </div>
