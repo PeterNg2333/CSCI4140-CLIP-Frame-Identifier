@@ -160,5 +160,34 @@ def get_all_image_vectors():
     list = os.listdir('./app/embedded_vectors')
     return [i for i in list if '_image_' in i]
 
+def search_video(video_path: str, text_query: str, k: int):
+    '''
+    Search for the particular frame that matches the text query.
+    :param video_path: The path to the video file.
+    :param text_query: The text query.
+    :param k: The number of frames to return.
+    :return: the result of the search matched or not matched. 
+    :return the sorted list of frames that match the text query.
+    '''
+    try:
+        print("Searching frame" + video_path + text_query + str(k))
+        ## If text_query is empty, encode it first
+        if not os.path.exists(f'./app/embedded_vectors/{text_query}_text_vectors.npy'):
+            encode_text(text_query)
+
+        ## Decide the number of k based on length of video
+        meta_path = f'./data/meta/{video_path.split("/")[-1].split(".")[0]}.json'
+        result, video_path = inference.search(video_path, text_query, 1)
+        print("Frame search completed successfully")
+        str_result = []
+        for i in result:
+            # Convert numpy.int64 to python string
+            temp_str = str(i)
+            str_result.append(temp_str)
+        return  str_result
+    except Exception as e:
+        print(f"Error searching frame: {e}")
+        return f"Error searching frame: {e}"
+
 
 

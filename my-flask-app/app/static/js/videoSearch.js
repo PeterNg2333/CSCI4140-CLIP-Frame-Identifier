@@ -16,7 +16,7 @@ document.body.onload = function(){
 }
 
 function Initization(){
-    query = document.querySelector("#videoSearch");
+    query = document.querySelector("#videoSearch").value;
     // get all the video items from get api
     fetch('/getMetaList', {
         method: 'GET',
@@ -35,10 +35,7 @@ function Initization(){
             // searchVideoOneByOne(data[i], query)
             console.log(element)
             var root = document.querySelector("#video-container")
-            createHTML(element, query, root)
-            if (count == 0){
-                getInVideoFrames(element, query, root)
-            }
+            getInVideoFrames(element, query, root)
 
             count += 1
         });
@@ -65,7 +62,7 @@ function createHTML(fileMeta, queryString, root){
                                     <section class="card-body row pt-0" >
                                         <div class=" ps-3 ">
                                             <!-- <ul class="card-title list-group list-group-horizontal-sm rounded border border-white SearchResult-frame" style="overflow-y: hidden; overflow-x: scroll; max-width: 100%; display: inline-block"> -->
-                                            <ul id="searchResultFrame" class="list-group list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark ">
+                                            <ul id="f-${fileMeta['name'].split(".")[0]}-SearchResult-frame" class="list-group SearchResult list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark ">
                                                 <p class="blue-purple-mix text-white" id="innearText" style="opacity: 0.6;">  
                                                     <img src="https://portal.ufvjm.edu.br/a-universidade/cursos/grade_curricular_ckan/loading.gif/@@images/image.gif" 
                                                         class="pb-1" 
@@ -84,23 +81,66 @@ function createHTML(fileMeta, queryString, root){
                                 </div>
                             </div>
                         </div>`
-    root.appendChild(ResultItemDiv)
     
+    root.appendChild(ResultItemDiv)
+    return ResultItemDiv
 }
 
-function getInVideoFrames(file, query, root){
+function getInVideoFrames(fileMeta, queryString, root){
+    console.log(query)
     fetch('/getInVideoFrames', {
-        method: 'POST', body: JSON.stringify({queryString: query, fileName: file['name']}), headers: {'Content-Type': 'application/json'}
-    }).then(response => {
+        method: 'POST', body: JSON.stringify({queryString: queryString, fileName: fileMeta['name']}), headers: {'Content-Type': 'application/json'}
+      }).then(response => {
         if (response.ok) {
-            // if the server responds with a 200 status code, hide the loading spinner
-            // dialog.close()
-        }else
-            alert("An error occurred, please try again")
+          // if the server responds with a 200 status code, hide the loading spinner
+          // dialog.close()
+        }else{
+          // if the server responds with an error, display an alert message
+          alert("An error occurred, please try again")
+          // dialog.close()
+          // Refresh the page to reset the controls
+        }
+        // location.reload()
         return response.json()
-        }).then(data => {
-            console.log(data)
-        });
+      }).then(data => {
+        // console.log(data)
+        // Sort the data
+        data.sort(function(a, b){return a - b});
+        console.log("#"+`f-${fileMeta['name']}-SearchResult`)
+        if (data.length > 0){
+            result = createHTML(fileMeta, queryString, root)
+            frame = result.querySelector("ul")
+            frame.innerHTML = ""
+            var fid = frame.id
+            var text = ""
+            for (var i = 0; i < data.length; i++){
+                var frame = data[i]
+                text += `
+                    <il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
+                        <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
+                            <img class="searchItem-frame" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
+                                    class="" 
+                                    width="100px"
+                                    height="80px"
+                                    alt="...">
+                        </div>
+                        <div class="col-6 px-0 pt-1">
+                            <p class="card-text"><small class="text-muted">-0.01</small></p>
+                        </div>
+                    </il>
+                `
+                
+            }
+            new_frame = document.createElement("div")
+            new_frame.innerHTML = text
+            document.querySelector("#"+fid).appendChild(new_frame)
+        }else{
+            root.innerHTML = ""
+        }
 
-}
+
+      });
+  }
+
+
 

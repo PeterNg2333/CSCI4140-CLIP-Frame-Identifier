@@ -96,24 +96,15 @@ def get_meta_list():
 
 
 
-
-# @app.route('/getMatchedVideo', methods=['POST'])
-# def search_video():
-#     data_json = request.get_json()
-#     file_name = data_json['fileName']
-#     print("Searching video" + file_name)
-#     video_path = f"./data/video/{file_name}"
-#     queryString = data_json['queryString']
-#     result = api_spec.search_frame(video_path, queryString, 5)
-#     if result != []:
-#         name = file_name.split('.')[0]
-#         json_file = f'./data/meta/{name}.json'
-#         if os.path.exists(json_file):
-#             with open(json_file) as f:
-#                 video_mata = json.load(f)
-#         else:
-#             video_mata = {}
-#         return json.dumps(video_mata)
-#     else:
-#         return json.dumps([False])
+@app.route('/getMatchedVideo', methods=['POST'])
+def search_video():
+    data_json = request.get_json()
+    file_name = data_json['fileName']
+    print(file_name)
+    video_path = f"./data/video/{file_name}"
+    queryString = data_json['queryString']
+    k = 7
+    sorted_cluster_frames= api_spec.search_video(video_path, queryString, int(k))
+    print(sorted_cluster_frames)
+    return json.dumps(sorted_cluster_frames)
 
