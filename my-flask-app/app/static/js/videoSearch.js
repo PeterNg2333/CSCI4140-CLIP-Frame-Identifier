@@ -44,7 +44,7 @@ function Initization(){
 
 function createHTML(fileMeta, queryString, root){
     var ResultItemDiv = document.createElement("div") 
-    ResultItemDiv.innerHTML = `<div class="card mb-3 bg-dark " style="max-width: 100%;" onclick="openVideo(event)" id="f-${ fileMeta['name']}" >
+    ResultItemDiv.innerHTML = `<div class="card mb-3 bg-dark " style="max-width: 100%;" onclick="window.location.href='videoPlayer?video_name=${fileMeta['name'] }'" id="f-${ fileMeta['name']}" >
                         <div class="row g-0 searchItem">
                                 <div class="col-md-5 ps-2 py-2" >
                                     <img src="${fileMeta['thumbnail']}"  
@@ -112,28 +112,27 @@ function getInVideoFrames(fileMeta, queryString, root){
             frame = result.querySelector("ul")
             frame.innerHTML = ""
             var fid = frame.id
-            var text = ""
-            for (var i = 0; i < data.length; i++){
-                var frame = data[i]
-                text += `
-                    <il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
-                        <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
-                            <img class="searchItem-frame" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
-                                    class="" 
-                                    width="100px"
-                                    height="80px"
-                                    alt="...">
-                        </div>
-                        <div class="col-6 px-0 pt-1">
-                            <p class="card-text"><small class="text-muted">-0.01</small></p>
-                        </div>
-                    </il>
-                `
-                
+            var temp
+            var new_frame = document.querySelector("#"+fid)
+            if (new_frame != null){
+                new_frame.innerHTML = ""
+                temp = document.createElement("div")
+                temp.innerHTML = `
+                <il class="ps-0 pt-0 inVideoItem bg-dark text-white list-group-item mx-1"  onclick="openVideoFrame(event)">
+                    <div class="col-6" style="padding-left: 0px;padding-right: 0px;">
+                        <img class="searchItem-frame" src="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA" 
+                                class="" 
+                                width="100px"
+                                height="80px"
+                                alt="...">
+                    </div>
+                    <div class="col-6 px-0 pt-1">
+                        <p class="card-text"><small class="text-muted">-0.01</small></p>
+                    </div>
+                </il>
+            `
+            new_frame.appendChild(temp)
             }
-            new_frame = document.createElement("div")
-            new_frame.innerHTML = text
-            document.querySelector("#"+fid).appendChild(new_frame)
         }else{
             root.innerHTML = ""
         }
