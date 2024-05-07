@@ -12,6 +12,16 @@ function handleClick(event) {
     // Set border or style change for the clicked element
     this.classList.add("videoClipClicked");
     previouslyClickedElement = this; // Update the previously clicked element
+    var file_name = this.id.split("f-")[1] + ".mp4";
+    video_title = document.querySelector("#" + this.id + " .videoTitle").textContent 
+    // get the video title of the first 15 characters
+    if (video_title.length > 15){
+      video_title = video_title.substring(0, 15) + "...";
+    }
+    CardTitle = document.querySelector("#cardTitle")
+    CardTitle.innerHTML = video_title;
+    document.querySelector(".EditorSearchBtn").id = file_name;
+    document.querySelector(".clickable-videoClip-Frame").innerHTML = '<p class="blue-purple-mix text-center" id="innearText" style="opacity: 0.75;"> Type it, Find it </p>'
     event.stopPropagation(); // Prevent event bubbling
     
   }
@@ -37,13 +47,6 @@ function handleClickFrame(event) {
       previouslyClickedFrame.classList.remove("frame-clicked");
       previouslyClickedFrame.classList.add("col-6");
       event.target.innerHTML = "Expand";
-      img.innerHTML =  `<img src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
-                            class="" 
-                            width="100%"
-                            height="100%"
-                            style="margin-left: auto; margin-right: auto;"
-                            alt="...">`;
-      timeline.innerHTML = `<i class="fa-regular fa-clock "></i> 00:00 ~  00:00 `
       if (thiselement === previouslyClickedFrame) {
         previouslyClickedFrame = null;
         return;
@@ -55,24 +58,24 @@ function handleClickFrame(event) {
     thiselement.classList.add("frame-clicked");
     thiselement.classList.remove("col-6");
     event.target.innerHTML = "Collapse";
-    img.innerHTML =  `<video id="" 
-                          class="archorpthumbnail" 
-                          preload="metadata" 
-                          autoplay
-                          width="100%" 
-                          height="100%"
-                          style="margin-left: auto; margin-right: auto;"
-                          poster="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA">
-                          <source src="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/v-de3f6ca7-2db3-4689-8160-0f574a5996ad.mp4" type="video/mp4">
+    // img.innerHTML =  `<video id="" 
+    //                       class="archorpthumbnail" 
+    //                       preload="metadata" 
+    //                       autoplay
+    //                       width="100%" 
+    //                       height="100%"
+    //                       style="margin-left: auto; margin-right: auto;"
+    //                       poster="https://cloudinary-marketing-res.cloudinary.com/images/w_1000,c_scale/v1679921049/Image_URL_header/Image_URL_header-png?_i=AA">
+    //                       <source src="https://cdn.flowplayer.com/a30bd6bc-f98b-47bc-abf5-97633d4faea0/v-de3f6ca7-2db3-4689-8160-0f574a5996ad.mp4" type="video/mp4">
                           
-                      </video> <span class="bg-dark insidethumbnail-video"> 0s </span>`;
-    timeline.innerHTML = `<span >
-                            from
-                            <input type="time" id="appt" name="appt" min="00:00" max="24:00" value="00:00"> 
-                            to
-                            <input type="time" id="appt" name="appt" min="00:00" max="24:00" value="00:00">
-                            <input type="button" class="bg-blue-purple-mix" value="Set" style="color:black !important;">
-                          </span>`
+    //                   </video> <span class="bg-dark insidethumbnail-video"> 0s </span>`;
+    // timeline.innerHTML = `<span >
+    //                         from
+    //                         <input type="time" id="appt" name="appt" min="00:00" max="24:00" value="00:00"> 
+    //                         to
+    //                         <input type="time" id="appt" name="appt" min="00:00" max="24:00" value="00:00">
+    //                         <input type="button" class="bg-blue-purple-mix" value="Set" style="color:black !important;">
+    //                       </span>`
     previouslyClickedFrame = thiselement; // Update the previously clicked element
     event.stopPropagation(); // Prevent event bubbling
     
@@ -105,4 +108,72 @@ function drop(event){
                                                 alt="">
                                     </div>
                                 </il>`;
+}
+
+function searchframe(event){
+  var query = document.querySelector("#query").value;
+  var file_name = document.querySelector(".EditorSearchBtn").id;
+  var url = "./getInVideoFrames"
+  if (query == ""){
+    alert("Please enter a query to search for")
+    return;
+  }
+  if (file_name == ""){
+    alert("Please select a video to search from")
+    return;
+  }
+
+  fetch(url, {
+    method: "POST",
+    body: JSON.stringify({queryString: query, fileName: file_name}),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => {
+    if (response.ok) {
+    }else{
+      alert("An error occurred, please try again")
+    }
+    // location.reload()
+    return response.json()
+  }).then(data => {
+    document.querySelector(".clickable-videoClip-Frame").innerHTML = ""
+    // sort the data
+    data.sort(function(a, b){return a - b});
+    file_id = "f-" + file_name.split('.')[0]
+    file = document.querySelector("#" + file_id)
+    file_src = file.querySelector(".videoSrc").src
+    ending_length = document.querySelector("#" + file_id + " .length").textContent
+    for (var i = 0; i < data.length; i++){
+      var frame = data[i]
+      var frameDiv = document.createElement("div")
+      var second_diffenrent = data[i+1] - Math.floor(data[i]/30)
+      var starting_second = Math.floor(data[i]/30)
+      var end_minute = Number(ending_length.split(":")[0]*60)
+      var end_second = i == Number(ending_length.split(":")[1])
+      var ending_time = i == data.length - 1 ? end_minute + end_second : Math.floor(data[i+1]/30)
+      var time_diff = ending_time - starting_second
+      console.log("Time diff: " + time_diff)
+      frameDiv.innerHTML = `<il class="col-6 py-2 videoHover" draggable="true" ondragstart="drag(event)" >
+                                <div class="display" >
+                                    <img src="${file_src}" 
+                                                class="archorpthumbnail" 
+                                                width="100%"
+                                                height="100%"
+                                                style="margin-left: auto; margin-right: auto;"
+                                                alt="...">
+                                                <span class="bg-dark insidethumbnail"> ${time_diff}s</span>
+                                </div> 
+                                <div class="card-body p-0 row pt-1 pb-2" style="opacity: 0.7;">
+                                    <p class="m-0 text-nowrap col-4" style="overflow: hidden;"><button class="btn btn-sm btn-light text-white bg-dark " style="padding: 2px 6px !important;" onclick="handleClickFrame(event)"> Play </button></p>
+                                    <p class="text-end mb-0 col-8 timeline" style="margin-top: auto; margin-bottom: auto;"> <i class="fa-regular fa-clock "></i> 
+                                    ${ Math.floor(data[i]/30/60) }:${ Math.floor(data[i]/30%60) }
+                                     ~  
+                                    ${i == data.length - 1 ? ending_length : Math.floor(data[i+1]/30/60) }${i == data.length - 1 ? "" : ":" + Math.floor(data[i+1]/30%60)  }
+                                    </p>
+                                </div>
+                            </il>`
+      document.querySelector(".clickable-videoClip-Frame").innerHTML += frameDiv.innerHTML
+    }
+  });
 }

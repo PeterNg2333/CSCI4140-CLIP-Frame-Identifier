@@ -69,7 +69,11 @@ def search_html():
 @app.route('/videoEditor')
 def editor_html():
     editor = app.config["title_choices"]["Editor"]
-    return  render_template('index.html', title=editor, APP_CONFIG=app.config, list_files=app.config['templates_list_files'])
+    ## Get the first 4 videos to display
+    video_mata = api_spec.get_all_meta(api_spec.get_all_videos())
+    length = min(4, len(video_mata))
+    video_mata = video_mata[:length]
+    return  render_template('index.html', title=editor, APP_CONFIG=app.config, video_mata = video_mata, length = length , list_files=app.config['templates_list_files'])
 
 @app.route('/root')
 def root():
