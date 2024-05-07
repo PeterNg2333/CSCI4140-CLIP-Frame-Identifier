@@ -95,24 +95,36 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function drag(event){
+function drag(event, id){
   console.log(event.target + " : is doing nothing yet");
-  event.dataTransfer.setData("text", event.target.id);
+  event.dataTransfer.setData("text", id);
 }
 
 function drop(event){
     event.preventDefault();
     var targetElement = event.target.parentElement.parentElement;
-    var data = event.dataTransfer.getData("text");
+    var id = event.dataTransfer.getData("text");
+    var file_name = id.split("-")[1] + ".mp4";
+    var targetVideoSrc = document.querySelector("#" + id + " video source").src;
+    var starting_second = document.querySelector("#" + id + " .timeline").id.split("s-")[1].split(" e-")[0];
+    var ending_second = document.querySelector("#" + id + " .timeline").id.split("s-")[1].split(" e-")[1];
+    console.log(targetVideoSrc);
+    console.log("Starting second: " + starting_second + " Ending second: " + ending_second);
     targetElement.innerHTML = `<il class="p-0 mb-1 inVideoItem bg-dark text-white list-group-item"">
-                                    <div class="" style="padding-left: 0px;padding-right: 0px;">
-                                        <img src="https://assets-global.website-files.com/659415b46df8ea43c3877776/65a6263826e433c2f84eb4d1_url-image-7a74f0de.png" 
+                                    <div class="Added" id="${"clip-f_"+ file_name +"-s_" + starting_second + "-e_" + ending_second}" style="padding-left: 0px;padding-right: 0px;">
+                                        <video  
                                                 class="bg-dark" 
                                                 width="105px"
                                                 height="80px"
+                                                muted
+                                                id="videoClip-${id}"
                                                 alt="">
+                                                <source src="${targetVideoSrc}" type="video/mp4">
+                                        </video>
                                     </div>
                                 </il>`;
+   video = document.querySelector("#videoClip-" + id);
+   video.currentTime = starting_second;             
 }
 
 function searchframe(event){
@@ -160,7 +172,7 @@ function searchframe(event){
       var end_second = Number(ending_length.split(":")[1])
       var ending_time = i == data.length - 1 ? end_minute + end_second : Math.floor(data[i+1]/30)
       var time_diff = ending_time - starting_second
-      frameDiv.innerHTML = `<il class="col-6 py-2 videoHover" draggable="true" ondragstart="drag(event)" >
+      frameDiv.innerHTML = `<il class="col-6 py-2 videoHover" draggable="true" ondragstart="drag(event, 'f-${file_name.split('.')[0]}-${i}')" id="f-${file_name.split('.')[0]}-${i}">
                                 <div class="display" >
                                     <video  class="archorpthumbnail" 
                                                 id = "vf-${file_name.split('.')[0]}-${i}"
@@ -177,7 +189,9 @@ function searchframe(event){
                                 </div> 
                                 <div class="card-body p-0 row pt-1 pb-2" style="opacity: 0.7;">
                                     <p class="m-0 text-nowrap col-4" style="overflow: hidden;"><button class="btn btn-sm btn-light text-white bg-dark " style="padding: 2px 6px !important;" onclick="handleClickFrame(event)"> Play </button></p>
-                                    <p class="text-end mb-0 col-8 timeline" id="timer-setting" style="margin-top: auto; margin-bottom: auto;"> 
+                                    <p class="text-end mb-0 col-8 timeline timer-setting" style="margin-top: auto; margin-bottom: auto;"
+                                      id="s-${starting_second} e-${ending_time}"
+                                    > 
                                       <i class="fa-regular fa-clock"></i> 
                                       ${ Math.floor(data[i]/30/60) }:${ Math.floor(data[i]/30%60) }
                                       ~  
@@ -193,3 +207,55 @@ function searchframe(event){
     });
   });
 }
+
+global_timeline = []
+current_time = {video: -1, time: 0}
+
+async function playvideo(event){
+  var video = document.querySelector("#videoPlayer");
+  var video_src =document.querySelector("#videoPlayer source").src;
+  var all_clips = document.querySelectorAll("#TimeLine-Clips il .Added");
+  var clips_length = all_clips.length;
+  global_timeline_length = global_timeline.length;
+  // Update global timeline if the video source has changed
+  if (global_timeline_length < clips_length) {
+      for (let i = 0; i < all_clips.length; i++) {
+        console.log(all_clips[i].id)
+        var file_name = all_clips[i].id.split("_")[1].split("-")[0];
+        var starting_second = all_clips[i].id.split("_")[2].split("-")[0];
+        var ending_second = Number(all_clips[i].id.split("_")[3]) + 1 ;
+        console.log(file_name + " " + starting_second + " " + ending_second)
+        global_timeline.push({file: file_name, start: starting_second, end: ending_second})
+    }
+  }
+
+  // Play the video and restore the previous video
+  if (current_time.video == -1) {
+    current_time.video = 0;
+    current_time.time = global_timeline[0].start;
+  }
+  // play the video according to the global timeline and current time
+  for (i = current_time.video; i < global_timeline.length; i++){
+      document.querySelector("#videoPlayer source").src = "./static/video/" + global_timeline[i].file 
+      if (document.querySelector("#videoPlayer").paused == false){
+        document.querySelector("#videoPlayer").pause();
+      }
+      document.querySelector("#videoPlayer").load();
+      document.querySelector("#videoPlayer").currentTime = current_time.time;
+      document.querySelector("#videoPlayer").play();
+      await timer(global_timeline[i].end - global_timeline[i].start*1000);
+      console.log("Playing next video")
+      current_time.video = i+1;
+      current_time.time = global_timeline[i+1].start;
+    }
+    document.querySelector("#videoPlayer").pause();
+}
+
+const timer = ms => new Promise(res => setTimeout(res, ms))
+
+// function stopvideo(event){
+//   var video = document.querySelector("#videoClip-" + event.target.id);
+//   video.pause();
+//   video.currentTime = 0;
+//   event.target.innerHTML = "Play";
+// }

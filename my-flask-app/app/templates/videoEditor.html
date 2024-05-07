@@ -99,11 +99,12 @@
                 <div class="px-2 mb-0 bg-dark pt-2 " >
                     <div class="row px-2">
                         <div class="d-grid gap-2 pb-3 col-1 mx-auto">
-                            <button class="btn btn-primary"> <i class="fa-solid fa-play"></i> </button>
-                            <button class="btn btn-primary"> <i class="fa-solid fa-pause"></i> </button>
+                            <button class="btn btn-primary" onclick="playvideo(event)"> <i class="fa-solid fa-play"></i> </button>
+                            <button class="btn btn-primary" onclick="stopvideo(event)"> <i class="fa-solid fa-pause"></i> </button>
                         </div>
                         <div class="col-11 pb-3 px-0 pe-3" >
                             <ul class="rounded list-group list-group-horizontal position-relative overflow-auto w-100 SearchResult-frame bg-dark rounded border border-dark pb-3" 
+                                id="TimeLine-Clips"
                                 style="border-left: solid 15px #333333 !important; border-right: solid 15px #333333 !important;">
                                 {%for i in range(0, 15)%}
                                     <il class="p-0 mb-1 inVideoItem bg-dark text-white list-group-item" ondrop="drop(event)" ondragover="allowDrop(event)">
