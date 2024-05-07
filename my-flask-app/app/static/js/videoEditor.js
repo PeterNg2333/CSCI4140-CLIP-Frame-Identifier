@@ -46,6 +46,10 @@ function handleClickFrame(event) {
       previouslyClickedFrame.classList.remove("col-12");
       previouslyClickedFrame.classList.remove("frame-clicked");
       previouslyClickedFrame.classList.add("col-6");
+      console.log(previouslyClickedFrame.querySelector(".display video"))
+      while (previouslyClickedFrame.querySelector(".display video").paused == false){
+        previouslyClickedFrame.querySelector(".display video").pause();
+      }
       event.target.innerHTML = "Expand";
       if (thiselement === previouslyClickedFrame) {
         previouslyClickedFrame = null;
@@ -58,6 +62,7 @@ function handleClickFrame(event) {
     thiselement.classList.add("frame-clicked");
     thiselement.classList.remove("col-6");
     event.target.innerHTML = "Collapse";
+    thiselement.querySelector(".display video").play();
     // img.innerHTML =  `<video id="" 
     //                       class="archorpthumbnail" 
     //                       preload="metadata" 
@@ -143,37 +148,48 @@ function searchframe(event){
     file_id = "f-" + file_name.split('.')[0]
     file = document.querySelector("#" + file_id)
     file_src = file.querySelector(".videoSrc").src
+    video_link = "./static/video/" + file_name
     ending_length = document.querySelector("#" + file_id + " .length").textContent
-    for (var i = 0; i < data.length; i++){
+    var i = 0;
+    data.forEach(element => {
       var frame = data[i]
       var frameDiv = document.createElement("div")
       var second_diffenrent = data[i+1] - Math.floor(data[i]/30)
       var starting_second = Math.floor(data[i]/30)
       var end_minute = Number(ending_length.split(":")[0]*60)
-      var end_second = i == Number(ending_length.split(":")[1])
+      var end_second = Number(ending_length.split(":")[1])
       var ending_time = i == data.length - 1 ? end_minute + end_second : Math.floor(data[i+1]/30)
       var time_diff = ending_time - starting_second
-      console.log("Time diff: " + time_diff)
       frameDiv.innerHTML = `<il class="col-6 py-2 videoHover" draggable="true" ondragstart="drag(event)" >
                                 <div class="display" >
-                                    <img src="${file_src}" 
-                                                class="archorpthumbnail" 
+                                    <video  class="archorpthumbnail" 
+                                                id = "vf-${file_name.split('.')[0]}-${i}"
                                                 width="100%"
                                                 height="100%"
+                                                muted
                                                 style="margin-left: auto; margin-right: auto;"
+                                                muted
                                                 alt="...">
-                                                <span class="bg-dark insidethumbnail"> ${time_diff}s</span>
+                                                <source src="${video_link}" type="video/mp4">
+                                                        
+                                    </video>
+                                    <span class="bg-dark insidethumbnail"> ${time_diff}s</span>
                                 </div> 
                                 <div class="card-body p-0 row pt-1 pb-2" style="opacity: 0.7;">
                                     <p class="m-0 text-nowrap col-4" style="overflow: hidden;"><button class="btn btn-sm btn-light text-white bg-dark " style="padding: 2px 6px !important;" onclick="handleClickFrame(event)"> Play </button></p>
-                                    <p class="text-end mb-0 col-8 timeline" style="margin-top: auto; margin-bottom: auto;"> <i class="fa-regular fa-clock "></i> 
-                                    ${ Math.floor(data[i]/30/60) }:${ Math.floor(data[i]/30%60) }
-                                     ~  
-                                    ${i == data.length - 1 ? ending_length : Math.floor(data[i+1]/30/60) }${i == data.length - 1 ? "" : ":" + Math.floor(data[i+1]/30%60)  }
+                                    <p class="text-end mb-0 col-8 timeline" id="timer-setting" style="margin-top: auto; margin-bottom: auto;"> 
+                                      <i class="fa-regular fa-clock"></i> 
+                                      ${ Math.floor(data[i]/30/60) }:${ Math.floor(data[i]/30%60) }
+                                      ~  
+                                      ${i == data.length - 1 ? ending_length : Math.floor(data[i+1]/30/60) }${i == data.length - 1 ? "" : ":" + Math.floor(data[i+1]/30%60)  }
                                     </p>
                                 </div>
                             </il>`
       document.querySelector(".clickable-videoClip-Frame").innerHTML += frameDiv.innerHTML
-    }
+      var video = document.querySelector("#vf-" + file_name.split('.')[0] + "-" + i)
+      video.currentTime = starting_second
+      console.log(starting_second)
+      i += 1;
+    });
   });
 }
