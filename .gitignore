@@ -128,3 +128,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+my-flask-app/app/__pycache__/api_spec.cpython-310.pyc
+my-flask-app/app/__pycache__/classes.cpython-310.pyc
+my-flask-app/app/__pycache__/api_spec.cpython-310.pyc
+my-flask-app/app/__pycache__/encoder.cpython-310.pyc
+my-flask-app/app/__pycache__/inference.cpython-310.pyc
+my-flask-app/app/__pycache__/routes.cpython-310.pyc
